@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="utf-8">
@@ -57,62 +57,70 @@
     <nav class="header-nav ms-auto" style="flex: 1; display: flex; justify-content: flex-end;">
       <ul class="d-flex align-items-center" style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center;">
         <li class="nav-item dropdown" style="margin-right: 15px;"></li>
-  
+    
         <!-- Menu do perfil -->
         <li class="nav-item dropdown pe-3">
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" style="text-decoration: none; color: #000; font-size: 14px;">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <!-- Nome do usuário exibido dinamicamente -->
+            <span class="d-none d-md-block dropdown-toggle ps-2" id="userName">Loading...</span>
           </a>
-  
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile" style="min-width: 200px; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
-            <li class="dropdown-header" style="text-align: center; margin-bottom: 10px;">
-              <h6 style="margin: 0;">Kevin Anderson</h6>
-              <span style="font-size: 12px; color: #666;">Web Designer</span>
+          
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6 id="dropdownUserName">User</h6> <!-- Nome do usuário dinâmico -->
+              <span id="dropdownUserRole">Loading...</span> <!-- Cargo ou descrição -->
             </li>
             <li>
-              <hr class="dropdown-divider" style="margin: 10px 0;">
+              <hr class="dropdown-divider">
             </li>
-  
+        
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html" style="text-decoration: none; color: #000; padding: 5px 10px;">
-                <i class="bi bi-person" style="margin-right: 5px;"></i>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
             </li>
             <li>
-              <hr class="dropdown-divider" style="margin: 10px 0;">
+              <hr class="dropdown-divider">
             </li>
-  
+        
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html" style="text-decoration: none; color: #000; padding: 5px 10px;">
-                <i class="bi bi-gear" style="margin-right: 5px;"></i>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
             </li>
             <li>
-              <hr class="dropdown-divider" style="margin: 10px 0;">
+              <hr class="dropdown-divider">
             </li>
-  
+        
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html" style="text-decoration: none; color: #000; padding: 5px 10px;">
-                <i class="bi bi-question-circle" style="margin-right: 5px;"></i>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
               </a>
             </li>
             <li>
-              <hr class="dropdown-divider" style="margin: 10px 0;">
+              <hr class="dropdown-divider">
             </li>
-  
+        
+            <!-- Botão de Logout -->
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#" style="text-decoration: none; color: #000; padding: 5px 10px;">
-                <i class="bi bi-box-arrow-right" style="margin-right: 5px;"></i>
+              <a class="dropdown-item d-flex align-items-center" href="#" id="logoutButton">
+                <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
             </li>
           </ul>
-        </li><!-- End Profile Nav -->
+        </li>
+    
+        <!-- Script para login/logout e controle dinâmico -->
+        <script src="./assets/js/auth.js"></script>
+
+        <!-- Fim do script -->
       </ul>
-    </nav><!-- End Icons Navigation -->
+    </nav>
+    <!-- End Icons Navigation -->
   
   </header>
   <!-- End Header -->
@@ -475,33 +483,10 @@
                 </div>
               </div>
 
-            </div><!-- End Customers Card -->
-
-            <!-- Recent Sales -->
-            <!DOCTYPE html>
-            <html lang="en">
-            
-            <head>
-              <!-- Meta tags, title, and other head elements -->
-            </head>
-            
-            <body>
-              <!-- Your HTML content -->
+            </div><!-- End Customers Card -->            
             
               <div class="col-12">
                 <div class="card recent-sales overflow-auto">
-                  <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                      <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li>
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                  </div>
-              
                   <div class="card-body">
                     <h5 class="card-title">Tabela<span> | Atualizada</span></h5>
                     <table class="table table-hover table-striped table-borderless align-middle">
@@ -521,67 +506,22 @@
                         <!-- Dados serão preenchidos aqui -->
                       </tbody>
                     </table>
+              
+                    <!-- Botões -->
                     <div class="d-flex justify-content-start gap-2 mt-3">
                       <button id="loadMore" class="btn btn-primary">Carregar Mais Itens</button>
                       <button id="loadAll" class="btn btn-outline-primary">Carregar Todos</button>
+                      <!-- Botão para adicionar itens, apenas para usuários autenticados -->
+                      <button id="addItemButton" class="btn btn-success" style="display: none;">Adicionar Item</button>
                     </div>
                   </div>
                 </div>
-              </div><!-- End Recent Sales -->
+              </div>
               
-              <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                  console.log('DOM fully loaded and parsed');
-                  let currentIndex = 0;
-                  let itemsPerPage = 10;
-                  let allData = [];
               
-                  function renderItems() {
-                    const tbody = document.getElementById('germoplasma_cafe');
-                    tbody.innerHTML = '';
-              
-                    const itemsToShow = allData.slice(0, currentIndex + itemsPerPage);
-                    itemsToShow.forEach(item => {
-                      const row = document.createElement('tr');
-                      row.innerHTML = `
-                        <td>${item.numero_acesso}</td>
-                        <td>${item.designacao_material}</td>
-                        <td>${item.local_coleta}</td>
-                        <td>${item.proprietario}</td>
-                        <td>${item.municipio_estado}</td>
-                        <td>${item.idade_lavoura}</td>
-                        <td>${item.data_coleta}</td>
-                        <td>${item.coletor}</td>
-                      `;
-                      tbody.appendChild(row);
-                    });
-                  }
-              
-                  fetch('https://www.epamig.tech/germoplasma/germoplasma_cafe.php')
-                    .then(response => {
-                      console.log('Response received');
-                      return response.json();
-                    })
-                    .then(data => {
-                      console.log('Data:', data);
-                      allData = data;
-                      renderItems();
-                    })
-                    .catch(error => {
-                      console.error('Error fetching data:', error);
-                    });
-              
-                  document.getElementById('loadMore').addEventListener('click', function() {
-                    currentIndex += itemsPerPage;
-                    renderItems();
-                  });
-              
-                  document.getElementById('loadAll').addEventListener('click', function() {
-                    currentIndex = allData.length;
-                    renderItems();
-                  });
-                });
-              </script>
+              <script src="./assets/js/auth.js"></script>
+
+              <!-- End Recent Sales -->
               
               <style>
                 .table {
