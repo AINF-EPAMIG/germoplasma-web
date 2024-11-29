@@ -10,12 +10,13 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/favicon_epamig.ico" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,91 +30,66 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center" style="height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; background-color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+  <header id="header" class="header fixed-top d-flex align-items-center"
+    style="height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; background-color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
 
     <!-- Botão do menu -->
     <div class="d-flex align-items-center justify-content-between" style="flex: 1;">
       <i class="bi bi-list toggle-sidebar-btn" style="margin-right: 10px; font-size: 24px; cursor: pointer;"></i>
     </div>
-  
+
     <!-- Logotipo centralizado -->
     <a href="index.html" class="d-flex align-items-center" style="flex: 1; justify-content: center;">
       <img src="assets/img/logo_epamig.svg" alt="epamig" style="height: 50px; width: auto;">
     </a>
-  
+
     <!-- Navegação -->
-    <nav class="header-nav ms-auto" style="flex: 1; display: flex; justify-content: flex-end;">
-      <ul class="d-flex align-items-center" style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center;">
+    <nav class="header-nav ms-auto" style="flex: 1; display: flex; justify-content: flex-end; ">
+      <ul class="d-flex align-items-center"
+        style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center;">
         <li class="nav-item dropdown" style="margin-right: 15px;"></li>
-    
+
         <!-- Menu do perfil -->
         <li class="nav-item dropdown pe-3">
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link nav-profile d-none align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <!-- Nome do usuário exibido dinamicamente -->
-            <span class="d-none d-md-block dropdown-toggle ps-2" id="userName">Loading...</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2" id="userName">User</span>
           </a>
-          
+
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6 id="dropdownUserName">User</h6> <!-- Nome do usuário dinâmico -->
-              <span id="dropdownUserRole">Loading...</span> <!-- Cargo ou descrição -->
+              <h6 id="dropdownUserName">Usuário</h6> <!-- Nome do usuário dinâmico -->
+              <span id="dropdownUserRole"></span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-        
+
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-        
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="minhaconta.html">
                 <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
+                <span>Configurações da Conta</span>
               </a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-        
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-        
+
             <!-- Botão de Logout -->
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#" id="logoutButton">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span>Sair</span>
               </a>
             </li>
           </ul>
         </li>
-    
+
         <!-- Script para login/logout e controle dinâmico -->
         <script src="./assets/js/auth.js"></script>
 
@@ -121,7 +97,7 @@
       </ul>
     </nav>
     <!-- End Icons Navigation -->
-  
+
   </header>
   <!-- End Header -->
 
@@ -138,195 +114,16 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Badges</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Buttons</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-cards.html">
-              <i class="bi bi-circle"></i><span>Cards</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-carousel.html">
-              <i class="bi bi-circle"></i><span>Carousel</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-list-group.html">
-              <i class="bi bi-circle"></i><span>List group</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-modal.html">
-              <i class="bi bi-circle"></i><span>Modal</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tabs.html">
-              <i class="bi bi-circle"></i><span>Tabs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-pagination.html">
-              <i class="bi bi-circle"></i><span>Pagination</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-progress.html">
-              <i class="bi bi-circle"></i><span>Progress</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-spinners.html">
-              <i class="bi bi-circle"></i><span>Spinners</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tooltips.html">
-              <i class="bi bi-circle"></i><span>Tooltips</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-remix.html">
-              <i class="bi bi-circle"></i><span>Remix Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-boxicons.html">
-              <i class="bi bi-circle"></i><span>Boxicons</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Icons Nav -->
-
-      <li class="nav-heading">Pages</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="minhaconta.html">
           <i class="bi bi-person"></i>
-          <span>Profile</span>
+          <span>Minha Conta</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed" href="pages-contact.html">
           <i class="bi bi-envelope"></i>
-          <span>Contact</span>
+          <span>Contato</span>
         </a>
       </li><!-- End Contact Page Nav -->
 
@@ -343,20 +140,6 @@
           <span>Login</span>
         </a>
       </li><!-- End Login Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
-          <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
-        </a>
-      </li><!-- End Error 404 Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
 
     </ul>
 
@@ -381,451 +164,269 @@
         <div class="col-lg-8">
           <div class="row">
 
-            <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card sales-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
+            <!-- Totais Card -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+              <div class="card info-card sales-card h-100">
                 <div class="card-body">
-                  <h5 class="card-title">Totais<span> | germoplasma de café cadastrados</span></h5>
-
+                  <h5 class="card-title">Totais <br><span>germoplasma de café cadastrados</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-cup-hot"></i>
                     </div>
                     <div class="ps-3">
                       <h6>1327</h6>
-
                     </div>
                   </div>
                 </div>
-
               </div>
-            </div><!-- End Sales Card -->
+            </div><!-- Totais Card -->
 
-            <!-- Revenue Card -->
-            <div class="col-xxl-4 col-md-6">
-              <div class="card info-card revenue-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
+            <!-- Resistentes Card -->
+            <div class="col-xxl-4 col-md-6 mb-4">
+              <div class="card info-card revenue-card h-100">
                 <div class="card-body">
-                  <h5 class="card-title">Resistentes à Ferrugem <span>| germoplasma resistentes</span></h5>
-
+                  <h5 class="card-title">Resistentes à Ferrugem <br><span>germoplasma resistentes</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-hand-thumbs-up"></i>
                     </div>
                     <div class="ps-3">
                       <h6>999</h6>
-
                     </div>
                   </div>
                 </div>
-
               </div>
-            </div><!-- End Revenue Card -->
+            </div><!-- Resistentes Card -->
 
-            <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
-
-              <div class="card info-card customers-card">
-
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
+            <!-- Não resistentes Card -->
+            <div class="col-xxl-4 col-xl-12 mb-4">
+              <div class="card info-card customers-card h-100">
                 <div class="card-body">
-                  <h5 class="card-title">Não resistentes à Ferrugem<span> | germoplasma não resistentes</span></h5>
-
+                  <h5 class="card-title">Não resistentes à Ferrugem <br><span>germoplasma não resistentes</span></h5>
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-hand-thumbs-down"></i>
                     </div>
                     <div class="ps-3">
                       <h6>999</h6>
-
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-            </div><!-- End Customers Card -->            
-            
-              <div class="col-12">
-                <div class="card recent-sales overflow-auto">
-                  <div class="card-body">
-                    <h5 class="card-title">Tabela<span> | Atualizada</span></h5>
-                    <table class="table table-hover table-striped table-borderless align-middle">
-                      <thead class="table-light">
-                        <tr>
-                          <th scope="col">Número de Acesso</th>
-                          <th scope="col">Designação do Material</th>
-                          <th scope="col">Local de Coleta</th>
-                          <th scope="col">Proprietário</th>
-                          <th scope="col">Município/Estado</th>
-                          <th scope="col">Idade da Lavoura</th>
-                          <th scope="col">Data de Coleta</th>
-                          <th scope="col">Coletor</th>
-                        </tr>
-                      </thead>
-                      <tbody id="germoplasma_cafe">
-                        <!-- Dados serão preenchidos aqui -->
-                      </tbody>
-                    </table>
-              
-                    <!-- Botões -->
-                    <div class="d-flex justify-content-start gap-2 mt-3">
-                      <button id="loadMore" class="btn btn-primary">Carregar Mais Itens</button>
-                      <button id="loadAll" class="btn btn-outline-primary">Carregar Todos</button>
-                      <!-- Botão para adicionar itens, apenas para usuários autenticados -->
-                      <button id="addItemButton" class="btn btn-success" style="display: none;">Adicionar Item</button>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              
-              <script src="./assets/js/auth.js"></script>
+            </div><!-- Não resistentes Card -->
 
-              <!-- End Recent Sales -->
-              
-              <style>
-                .table {
-                  border-collapse: collapse;
-                  width: 100%;
-                  font-size: 0.9rem;
-                  color: #333;
-                }
-              
-                .table th,
-                .table td {
-                  text-align: left;
-                  padding: 12px;
-                  border-bottom: 1px solid #eaeaea;
-                }
-              
-                .table th {
-                  background-color: #f8f9fa;
-                  font-weight: 600;
-                }
-              
-                .table-hover tbody tr:hover {
-                  background-color: #f1f3f5;
-                }
-              
-                .btn {
-                  font-size: 0.85rem;
-                  padding: 0.5rem 1rem;
-                  border-radius: 4px;
-                }
-              
-                .btn-primary {
-                  background-color: #007bff;
-                  border-color: #007bff;
-                  color: white;
-                }
-              
-                .btn-primary:hover {
-                  background-color: #0056b3;
-                  border-color: #004085;
-                }
-              
-                .btn-outline-primary {
-                  color: #007bff;
-                  border-color: #007bff;
-                }
-              
-                .btn-outline-primary:hover {
-                  background-color: #007bff;
-                  color: white;
-                }
-              
-                .card-title span {
-                  font-weight: normal;
-                  color: #6c757d;
-                }
-              </style>
-              
-          
-            </body>
+            <!-- Tabela -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+                <div class="card-body">
+                  <h5 class="card-title">Tabela<span> | Atualizada</span></h5>
+                  <table class="table table-hover table-borderless align-middle">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">Número de Acesso</th>
+                        <th scope="col">Designação do Material</th>
+                        <th scope="col">Local de Coleta</th>
+                        <th scope="col">Proprietário</th>
+                        <th scope="col">Município/Estado</th>
+                        <th scope="col">Idade da Lavoura</th>
+                        <th scope="col">Data de Coleta</th>
+                        <th scope="col">Coletor</th>
+                      </tr>
+                    </thead>
+                    <tbody id="germoplasma_cafe">
+                      <!-- Dados serão preenchidos aqui -->
+                    </tbody>
+                  </table>
             
-            </html>
+                  <!-- Botões -->
+                  <div class="d-flex justify-content-start gap-2 mt-3">
+                    <button id="loadMore" class="btn btn-dark">Carregar Mais Itens</button>
+                    <button id="loadAll" class="btn btn-outline-dark">Carregar Todos</button>
+                    <!-- Botão para adicionar itens, apenas para usuários autenticados -->
+                    <button id="addItemButton" class="btn btn-info" style="display: none;">Adicionar Item</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
 
+            <script src="./assets/js/auth.js"></script>
+</body>
+
+</div>
+</div><!-- Tabela -->
+
+<!-- Right side columns -->
+<div class="col-lg-4">
+
+  <!-- Imagens Café -->
+  <div class="card">
+    <div class="card-body pb-10">
+      <h5 class="card-title">O germoplasma<span> | na prática</span></h5>
+  
+      <div class="news">
+        <div class="post-item clearfix">
+          <img src="assets/img/cafe_conilon.jpg" alt="Cafe Conilon">
+          <div class="post-text">
+            <h4><a href="#">Café Conilon</a></h4>
+            <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
           </div>
-        </div><!-- End Left side columns -->
+        </div>
+  
+        <div class="post-item clearfix">
+          <img src="assets/img/cafe_cultivar_paraiso.jpg" alt="Cafe Cultivar Paraiso">
+          <div class="post-text">
+            <h4><a href="#">Café Cultivar Paraiso</a></h4>
+            <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
+          </div>
+        </div>
+  
+        <div class="post-item clearfix">
+          <img src="assets/img/mudas_cafe_catigua.png" alt="Mudas Cafe Catigua">
+          <div class="post-text">
+            <h4><a href="#">Mudas Café Catigua</a></h4>
+            <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
+          </div>
+        </div>
 
-        <!-- Right side columns -->
-        <div class="col-lg-4">
+        <div class="post-item clearfix">
+          <img src="assets/img/viveiro_mudas_de_cafe.jpg" alt="Viveiro">
+          <div class="post-text">
+            <h4><a href="#">Viveiro Mudas de Café</a></h4>
+            <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
+          </div>
+        </div>
 
-          <!-- Website Traffic -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
+        <div class="post-item clearfix">
+          <img src="assets/img/sementes-de-cafe.jpg" alt="Sementes">
+          <div class="post-text">
+            <h4><a href="#">Sementes Café</a></h4>
+            <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
+          </div>
+        </div>
 
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
+        <div class="post-item clearfix">
+          <img src="assets/img/cafe_torrado.png" alt="Cafe Torrado">
+          <div class="post-text">
+            <h4><a href="#">Café Premium</a></h4>
+            <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
+          </div>
+        </div>
 
-            <div class="card-body pb-0">
-              <h5 class="card-title">Municípios</h5>
-
-              <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
-
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#trafficChart")).setOption({
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    legend: {
-                      top: '5%',
-                      left: 'center'
-                    },
-                    series: [{
-                      name: 'Access From',
-                      type: 'pie',
-                      radius: ['40%', '70%'],
-                      avoidLabelOverlap: false,
-                      label: {
-                        show: false,
-                        position: 'center'
-                      },
-                      emphasis: {
-                        label: {
-                          show: true,
-                          fontSize: '18',
-                          fontWeight: 'bold'
-                        }
-                      },
-                      labelLine: {
-                        show: false
-                      },
-                      data: [{
-                          value: 1048,
-                          name: 'Search Engine'
-                        },
-                        {
-                          value: 735,
-                          name: 'Direct'
-                        },
-                        {
-                          value: 580,
-                          name: 'Email'
-                        },
-                        {
-                          value: 484,
-                          name: 'Union Ads'
-                        },
-                        {
-                          value: 300,
-                          name: 'Video Ads'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
-            </div>
-          </div><!-- End Website Traffic -->
-
-
-                    <!-- News & Updates Traffic -->
-                    <div class="card">
-                      <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                          <li class="dropdown-header text-start">
-                            <h6>Filter</h6>
-                          </li>
-          
-                          <li><a class="dropdown-item" href="#">Today</a></li>
-                          <li><a class="dropdown-item" href="#">This Month</a></li>
-                          <li><a class="dropdown-item" href="#">This Year</a></li>
-                        </ul>
-                      </div>
-          
-                      <div class="card-body pb-0">
-                        <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
-          
-                        <div class="news">
-                          <div class="post-item clearfix">
-                            <img src="assets/img/news-1.jpg" alt="">
-                            <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
-                            <p>Sit recusandae non aspernatur laboriosam. Quia enim eligendi sed ut harum...</p>
-                          </div>
-          
-                          <div class="post-item clearfix">
-                            <img src="assets/img/news-2.jpg" alt="">
-                            <h4><a href="#">Quidem autem et impedit</a></h4>
-                            <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
-                          </div>
-          
-                          <div class="post-item clearfix">
-                            <img src="assets/img/news-3.jpg" alt="">
-                            <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
-                            <p>Fugiat voluptas vero eaque accusantium eos. Consequuntur sed ipsam et totam...</p>
-                          </div>
-          
-                          <div class="post-item clearfix">
-                            <img src="assets/img/news-4.jpg" alt="">
-                            <h4><a href="#">Laborum corporis quo dara net para</a></h4>
-                            <p>Qui enim quia optio. Eligendi aut asperiores enim repellendusvel rerum cuder...</p>
-                          </div>
-          
-                          <div class="post-item clearfix">
-                            <img src="assets/img/news-5.jpg" alt="">
-                            <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
-                            <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
-                          </div>
-          
-                        </div><!-- End sidebar recent posts-->
-          
-                      </div>
-                    </div><!-- End News & Updates -->
-
-          <!-- Budget Report -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-            <div class="card-body pb-0">
-              <h5 class="card-title">Budget Report <span>| This Month</span></h5>
-
-              <div id="budgetChart" style="min-height: 400px;" class="echart"></div>
-
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                    legend: {
-                      data: ['Allocated Budget', 'Actual Spending']
-                    },
-                    radar: {
-                      // shape: 'circle',
-                      indicator: [{
-                          name: 'Sales',
-                          max: 6500
-                        },
-                        {
-                          name: 'Administration',
-                          max: 16000
-                        },
-                        {
-                          name: 'Information Technology',
-                          max: 30000
-                        },
-                        {
-                          name: 'Customer Support',
-                          max: 38000
-                        },
-                        {
-                          name: 'Development',
-                          max: 52000
-                        },
-                        {
-                          name: 'Marketing',
-                          max: 25000
-                        }
-                      ]
-                    },
-                    series: [{
-                      name: 'Budget vs spending',
-                      type: 'radar',
-                      data: [{
-                          value: [4200, 3000, 20000, 35000, 50000, 18000],
-                          name: 'Allocated Budget'
-                        },
-                        {
-                          value: [5000, 14000, 28000, 26000, 42000, 21000],
-                          name: 'Actual Spending'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
-            </div>
-          </div><!-- End Budget Report -->
-
-        </div><!-- End Right side columns -->
+        <div class="post-item clearfix">
+          <img src="assets/img/colheita_de_cafe.jpg" alt="Colheita">
+          <div class="post-text">
+            <h4><a href="#">Colheita Café</a></h4>
+            <p>Illo nemo neque maiores vitae officiis cum eum turos elan dries werona nande...</p>
+          </div>
+        </div>
 
       </div>
-    </section>
+    </div>
+    
+  </div><!-- Imagens Café -->
 
-  </main><!-- End #main -->
+<!-- Gráfico Municipios -->
+<div class="card">
+  <div class="card-body pb-10">
+    <h5 class="card-title">Municípios</h5>
+    <div id="trafficChart" style="min-height: 400px; margin-top: 20px;" class="echart">
+    </div>
 
-  <!-- ======= Footer
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        echarts.init(document.querySelector("#trafficChart")).setOption({
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            bottom: '-5%', // Posiciona a legenda abaixo do gráfico
+            left: 'center',
+            itemGap: 10 // Adiciona espaçamento entre os itens
+          },
+          series: [{
+            name: 'Municípios',
+            type: 'pie',
+            radius: ['30%', '60%'],
+            center: ['50%', '30%'],
+            avoidLabelOverlap: false,
+            label: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: '18',
+                fontWeight: 'bold'
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: 1048, name: 'Campinas-SP', itemStyle: { color: '#5470C6' } },
+              { value: 735, name: 'Viçosa-MG', itemStyle: { color: '#91CC75' } },
+              { value: 580, name: 'Patrocínio-MG', itemStyle: { color: '#EE6666' } },
+              { value: 484, name: 'Ervália-MG', itemStyle: { color: '#FAC858' } },
+              { value: 300, name: 'São Sebastião do Paraíso-MG', itemStyle: { color: '#73C0DE' } },
+              { value: 482, name: 'Martins Soares-MG', itemStyle: { color: '#3BA272' } },
+              { value: 300, name: 'Dois Córregos-SP', itemStyle: { color: '#FC8452' } },
+              { value: 484, name: 'Campos Altos-MG', itemStyle: { color: '#9A60B4' } },
+              { value: 300, name: 'Monte Santo de Minas-MG', itemStyle: { color: '#EA7CCC' } },
+              { value: 484, name: 'São Sebastião da Grama-SP', itemStyle: { color: '#D48265' } },
+              { value: 300, name: 'Araponga-MG', itemStyle: { color: '#91CC75' } },
+              { value: 484, name: 'Marechal Floriano-ES', itemStyle: { color: '#D4A5A5' } },
+              { value: 300, name: 'Guaxupé-MG', itemStyle: { color: '#749F83' } },
+              { value: 484, name: 'Guaranésia-SP', itemStyle: { color: '#F6BD16' } },
+              { value: 300, name: 'Alfenas-MG', itemStyle: { color: '#6DC8EC' } },
+              { value: 484, name: 'Manhumirim-MG', itemStyle: { color: '#FF9C6E' } },
+              { value: 300, name: 'Machado-MG', itemStyle: { color: '#C490CA' } },
+              { value: 484, name: 'Varginha-MG', itemStyle: { color: '#3E7E8C' } },
+              { value: 300, name: 'Santo Antônio do Amparo-MG', itemStyle: { color: '#9B8BBA' } },
+              { value: 484, name: 'Iuna-ES', itemStyle: { color: '#91CC76' } },
+              { value: 300, name: 'Carmo de Minas-MG', itemStyle: { color: '#F690D5' } },
+              { value: 484, name: 'Cambira-PR', itemStyle: { color: '#C89495' } },
+              { value: 300, name: 'Apucarana-PR', itemStyle: { color: '#57606F' } }
+            ]
+          }]
+        });
+      });
+    </script>
+
+  </div>
+</div>
+<!-- Gráfico Municipios -->
+
+</div><!-- End Right side columns -->
+
+</div>
+</section>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer
   <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>EPAMIG</span></strong>. All Rights Reserved
     </div>
   </footer> End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+    class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="assets/vendor/echarts/echarts.min.js"></script>
-  <script src="assets/vendor/quill/quill.js"></script>
-  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+<!-- Vendor JS Files -->
+<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/chart.js/chart.umd.js"></script>
+<script src="assets/vendor/echarts/echarts.min.js"></script>
+<script src="assets/vendor/quill/quill.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
 
 </body>
 
