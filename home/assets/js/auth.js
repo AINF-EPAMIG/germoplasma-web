@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
           if (data.success) {
             // Redirecionar para a página de login após logout
-            window.location.href = "./pages-login.html";
+            window.location.href = "/germoplasma/home/pages-login.html";
           } else {
             alert("Erro ao realizar o logout. Tente novamente.");
           }
