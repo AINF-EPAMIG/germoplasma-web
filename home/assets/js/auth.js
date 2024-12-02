@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Ocultar itens do menu inicialmente
   if (minhaConta) minhaConta.style.display = "none";
   if (register) register.style.display = "none";
-  if (login) login.style.display = "none";
 
   // Função para verificar e atualizar os dados do usuário
   async function fetchUserData() {

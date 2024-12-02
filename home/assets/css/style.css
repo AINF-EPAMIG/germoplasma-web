@@ -596,10 +596,6 @@ h6 {
 # Sidebar
 --------------------------------------------------------------*/
 
-#minhaConta, #register, #login {
-  display: none;
-}
-
 .sidebar {
   position: fixed;
   top: 60px;
