@@ -1,6 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = "https://www.epamig.tech/germoplasma/usuarios.php";
 
+  async function fetchUserData() {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action: "get_user" }),
+        credentials: "include", // Necessário para enviar cookies
+      });
+
+      const data = await response.json();
+
   //Login
 
   // Selecionar os itens do menu
@@ -11,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Ocultar itens do menu inicialmente
   if (minhaConta) minhaConta.style.display = "none";
   if (register) register.style.display = "none";
+  if (login) login.style.display = "none";
 
   // Função para verificar e atualizar os dados do usuário
   async function fetchUserData() {
@@ -170,22 +184,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const addItemButton = document.getElementById("addItemButton")
-  const addItemModal = new bootstrap.Modal(document.getElementById("addItemModal"));
 
   // Função para verificar usuário logado e apresentar botão de adicionar item
-  async function fetchUserData() {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ action: "get_user" }),
-        credentials: "include", // Necessário para enviar cookies
-      });
-
-      const data = await response.json();
-
+  
       if (data.success) {
         // Usuário logado: exibe o botão
         if (addItemButton) addItemButton.style.display = "block";
