@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = "https://www.epamig.tech/germoplasma/usuarios.php";
 
+  //Login
+
   // Selecionar os itens do menu
   const minhaConta = document.getElementById("minhaConta");
   const register = document.getElementById("register");
@@ -48,6 +50,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Chamar a função de verificação inicial
   fetchUserData();
+
+  // Cadastro Usuarios
+
+  document.getElementById("registerForm")?.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!name || !email || !password) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ action: "register", nome: name, email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert(data.message);
+          window.location.href = "/germoplasma/home/pages-login.html";
+        } else {
+          alert(`Erro: ${data.message}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao registrar:", error);
+        alert("Ocorreu um erro ao registrar. Tente novamente.");
+      });
+  });
 
   // Logout
   document

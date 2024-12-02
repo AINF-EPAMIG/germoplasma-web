@@ -598,7 +598,6 @@ h6 {
 
 #minhaConta, #register, #login {
   display: none;
-  border-bottom: 1px solid #ebeef4;
 }
 
 .sidebar {
@@ -761,6 +760,9 @@ h6 {
   background-color: #4154f1;
 }
 
+#sub-sidebar{
+  border-top: 1px solid #ebeef4;
+}
 /*--------------------------------------------------------------
 # Dashboard
 --------------------------------------------------------------*/
