@@ -53,39 +53,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Cadastro Usuarios
 
-  document.getElementById("registerForm")?.addEventListener("submit", function (event) {
-    event.preventDefault();
+  document
+    .getElementById("registerForm")
+    ?.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-    if (!name || !email || !password) {
-      alert("Por favor, preencha todos os campos.");
-      return;
-    }
+      if (!name || !email || !password) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
 
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ action: "register", nome: name, email, password }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          alert(data.message);
-          window.location.href = "/germoplasma/home/pages-login.html";
-        } else {
-          alert(`Erro: ${data.message}`);
-        }
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "register",
+          nome: name,
+          email,
+          password,
+        }),
       })
-      .catch((error) => {
-        console.error("Erro ao registrar:", error);
-        alert("Ocorreu um erro ao registrar. Tente novamente.");
-      });
-  });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert(data.message);
+            window.location.href = "/germoplasma/home/index.html";
+          } else {
+            alert(`Erro: ${data.message}`);
+          }
+        })
+        .catch((error) => {
+          console.error("Erro ao registrar:", error);
+          alert("Ocorreu um erro ao registrar. Tente novamente.");
+        });
+    });
 
   // Logout
   document
