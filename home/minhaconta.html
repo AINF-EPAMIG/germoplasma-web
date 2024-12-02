@@ -145,7 +145,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
+      <h1>Perfil</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -161,7 +161,8 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <h2>Nome Usuário</h2>
+              <icon class="bi bi-person-circle" style="font-size: 100px;"></icon>
+              <h2 id="nomeusuario"></h2>
               <h3>Epamig</h3>
 
             </div>
@@ -193,17 +194,17 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Nome</div>
-                    <div class="col-lg-9 col-md-8">Teste</div>
+                    <div class="col-lg-9 col-md-8" id="nomeusuario"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">teste@teste.com</div>
+                    <div class="col-lg-9 col-md-8" id="emailusuario"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Data de Cadastro</div>
-                    <div class="col-lg-9 col-md-8">01/01/0001</div>
+                    <div class="col-lg-9 col-md-8" id="datacadastrousuario"></div>
                   </div>
 
                 </div>
@@ -213,28 +214,28 @@
                   <form>
 
                     <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Senha Atual:</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="password" type="password" class="form-control" id="currentPassword">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nova Senha:</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="newpassword" type="password" class="form-control" id="newPassword">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Digite Novamente a Nova Senha:</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="renewpassword" type="password" class="form-control" id="renewPassword">
                       </div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" class="btn btn-dark">Alterar Senha</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
