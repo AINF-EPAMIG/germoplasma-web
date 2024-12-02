@@ -1,30 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = "https://www.epamig.tech/germoplasma/usuarios.php";
 
-  async function fetchUserData() {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ action: "get_user" }),
-        credentials: "include", // Necessário para enviar cookies
-      });
-
-      const data = await response.json();
-
-  //Login
-
   // Selecionar os itens do menu
   const minhaConta = document.getElementById("minhaConta");
   const register = document.getElementById("register");
   const login = document.getElementById("login");
 
+  // Botao adicionar +
+  const addItemButton = document.getElementById("addItemButton");
+
   // Ocultar itens do menu inicialmente
   if (minhaConta) minhaConta.style.display = "none";
   if (register) register.style.display = "none";
   if (login) login.style.display = "none";
+  if (addItemButton) addItemButton.style.display = "none";
 
   // Função para verificar e atualizar os dados do usuário
   async function fetchUserData() {
@@ -45,11 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (minhaConta) minhaConta.style.display = "block";
         if (register) register.style.display = "block";
         if (login) login.style.display = "none";
+        if (addItemButton) addItemButton.style.display = "block";
       } else {
         // Usuário não logado: exibe "Login", oculta "Minha Conta" e "Register"
         if (minhaConta) minhaConta.style.display = "none";
         if (register) register.style.display = "none";
         if (login) login.style.display = "block";
+        if (addItemButton) addItemButton.style.display = "none";
       }
     } catch (error) {
       console.error("Erro ao buscar dados do usuário:", error);
@@ -58,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (minhaConta) minhaConta.style.display = "none";
       if (register) register.style.display = "none";
       if (login) login.style.display = "block";
+      if (addItemButton) addItemButton.style.display = "none";
     }
   }
 
@@ -65,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
   fetchUserData();
 
   // Cadastro Usuarios
-
   document
     .getElementById("registerForm")
     ?.addEventListener("submit", function (event) {
@@ -183,33 +174,13 @@ document.addEventListener("DOMContentLoaded", function () {
     renderItems();
   });
 
-  const addItemButton = document.getElementById("addItemButton")
-
-  // Função para verificar usuário logado e apresentar botão de adicionar item
-  
-      if (data.success) {
-        // Usuário logado: exibe o botão
-        if (addItemButton) addItemButton.style.display = "block";
-      } else {
-        // Usuário não logado: oculta o botão
-        if (addItemButton) addItemButton.style.display = "none";
-      }
-    } catch (error) {
-      console.error("Erro ao buscar dados do usuário:", error);
-      // Como fallback, oculta o botão caso haja erro na verificação
-      if (addItemButton) addItemButton.style.display = "none";
-    }
-  }
-
-  // Chamar a função de verificação inicial
-  fetchUserData();
-
   if (addItemButton) {
     addItemButton.addEventListener("click", function () {
       addItemModal.show(); // Exibe o modal
     });
   }
 
+  const addItemForm = document.getElementById("addItemForm");
   // Submissão do formulário para adicionar novo item
   if (addItemForm) {
     addItemForm.addEventListener("submit", async function (event) {
