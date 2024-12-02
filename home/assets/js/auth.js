@@ -3,8 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Selecionar os itens do menu
   const minhaConta = document.getElementById("minhaConta");
-  const cadastrar = document.getElementById("cadastrar");
+  const register = document.getElementById("register");
   const login = document.getElementById("login");
+
+  // Ocultar itens do menu inicialmente
+  if (minhaConta) minhaConta.style.display = "none";
+  if (register) register.style.display = "none";
+  if (login) login.style.display = "none";
 
   // Função para verificar e atualizar os dados do usuário
   async function fetchUserData() {
@@ -27,22 +32,30 @@ document.addEventListener("DOMContentLoaded", function () {
         if (minhaConta) minhaConta.style.display = "block";
         if (login) login.style.display = "none";
 
-        // Exibir "cadastrar" apenas para usuários com nível de permissão 1
-        if (nivel_permissao === 1 && cadastrar) {
-          cadastrar.style.display = "block";
-        } else if (cadastrar) {
-          cadastrar.style.display = "none";
+        // Exibir "Register" apenas para usuários com nível de permissão 1
+        if (nivel_permissao === 1 && register) {
+          register.style.display = "block";
+        } else if (register) {
+          register.style.display = "none";
         }
       } else {
-        // Usuário não logado: exibe "Login" e oculta "Minha Conta" e "Cadastrar"
+        // Usuário não logado: exibe "Login" e oculta "Minha Conta" e "Register"
         if (minhaConta) minhaConta.style.display = "none";
-        if (cadastrar) cadastrar.style.display = "none";
+        if (register) register.style.display = "none";
         if (login) login.style.display = "block";
       }
     } catch (error) {
       console.error("Erro ao buscar dados do usuário:", error);
+
+      // Como fallback, exibe apenas o "Login" para usuários não autenticados
+      if (minhaConta) minhaConta.style.display = "none";
+      if (register) register.style.display = "none";
+      if (login) login.style.display = "block";
     }
   }
+
+  // Chamar a função de verificação inicial
+  fetchUserData();
 
   // Logout
   document
@@ -80,8 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function renderItems() {
     const tbody = document.getElementById("germoplasma_cafe");
-    if (!tbody) return;
-
     tbody.innerHTML = "";
 
     const itemsToShow = allData.slice(0, currentIndex + itemsPerPage);
@@ -112,16 +123,13 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error fetching data:", error);
     });
 
-  document.getElementById("loadMore")?.addEventListener("click", function () {
+  document.getElementById("loadMore").addEventListener("click", function () {
     currentIndex += itemsPerPage;
     renderItems();
   });
 
-  document.getElementById("loadAll")?.addEventListener("click", function () {
+  document.getElementById("loadAll").addEventListener("click", function () {
     currentIndex = allData.length;
     renderItems();
   });
-
-  // Chamar a função de verificação inicial
-  fetchUserData();
 });

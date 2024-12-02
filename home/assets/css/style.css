@@ -596,7 +596,7 @@ h6 {
 # Sidebar
 --------------------------------------------------------------*/
 
-#minhaConta, #cadastrar, #login {
+#minhaConta, #register, #login {
   display: none;
 }
 
