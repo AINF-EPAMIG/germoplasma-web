@@ -169,4 +169,85 @@ document.addEventListener("DOMContentLoaded", function () {
     currentIndex = allData.length;
     renderItems();
   });
+
+  const addItemButton = document.getElementById("addItemButton")
+  const addItemModal = new bootstrap.Modal(document.getElementById("addItemModal"));
+
+  // Função para verificar usuário logado e apresentar botão de adicionar item
+  async function fetchUserData() {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action: "get_user" }),
+        credentials: "include", // Necessário para enviar cookies
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Usuário logado: exibe o botão
+        if (addItemButton) addItemButton.style.display = "block";
+      } else {
+        // Usuário não logado: oculta o botão
+        if (addItemButton) addItemButton.style.display = "none";
+      }
+    } catch (error) {
+      console.error("Erro ao buscar dados do usuário:", error);
+      // Como fallback, oculta o botão caso haja erro na verificação
+      if (addItemButton) addItemButton.style.display = "none";
+    }
+  }
+
+  // Chamar a função de verificação inicial
+  fetchUserData();
+
+  if (addItemButton) {
+    addItemButton.addEventListener("click", function () {
+      addItemModal.show(); // Exibe o modal
+    });
+  }
+
+  // Submissão do formulário para adicionar novo item
+  if (addItemForm) {
+    addItemForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const newItem = {
+        numero_acesso: document.getElementById("numero_acesso").value.trim(),
+        designacao_material: document.getElementById("designacao_material").value.trim(),
+        local_coleta: document.getElementById("local_coleta").value.trim(),
+        proprietario: document.getElementById("proprietario").value.trim(),
+        municipio_estado: document.getElementById("municipio_estado").value.trim(),
+        idade_lavoura: document.getElementById("idade_lavoura").value.trim(),
+        data_coleta: document.getElementById("data_coleta").value.trim(),
+        coletor: document.getElementById("coletor").value.trim(),
+      };
+
+      try {
+        const response = await fetch("https://www.epamig.tech/germoplasma/add_item.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newItem),
+          credentials: "include",
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          alert("Item adicionado com sucesso!");
+          addItemModal.hide(); // Fecha o modal
+          location.reload(); // Recarrega os itens
+        } else {
+          alert(`Erro ao adicionar item: ${data.message}`);
+        }
+      } catch (error) {
+        console.error("Erro ao adicionar item:", error);
+        alert("Ocorreu um erro ao adicionar o item.");
+      }
+    });
+  }
 });

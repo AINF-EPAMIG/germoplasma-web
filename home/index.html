@@ -90,9 +90,6 @@
           </ul>
         </li>
 
-        <!-- Script para login/logout e controle dinâmico -->
-        <script src="./assets/js/auth.js"></script>
-
         <!-- Fim do script -->
       </ul>
     </nav>
@@ -245,14 +242,59 @@
                     <button id="loadMore" class="btn btn-dark">Carregar Mais Itens</button>
                     <button id="loadAll" class="btn btn-outline-dark">Carregar Todos</button>
                     <!-- Botão para adicionar itens, apenas para usuários autenticados -->
-                    <button id="addItemButton" class="btn btn-info" style="display: none;">Adicionar Item</button>
+                    <button id="addItemButton" class="btn btn-warning">Adicionar Germoplasma</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addItemModalLabel">Adicionar Novo Item</h5>
+                  </div>
+                  <div class="modal-body">
+                    <form id="addItemForm">
+                      <div class="mb-3">
+                        <label for="numero_acesso" class="form-label">Número de Acesso</label>
+                        <input type="text" class="form-control" id="numero_acesso" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="designacao_material" class="form-label">Designação do Material</label>
+                        <input type="text" class="form-control" id="designacao_material" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="local_coleta" class="form-label">Local de Coleta</label>
+                        <input type="text" class="form-control" id="local_coleta" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="proprietario" class="form-label">Proprietário</label>
+                        <input type="text" class="form-control" id="proprietario" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="municipio_estado" class="form-label">Município/Estado</label>
+                        <input type="text" class="form-control" id="municipio_estado" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="idade_lavoura" class="form-label">Idade da Lavoura</label>
+                        <input type="text" class="form-control" id="idade_lavoura" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="data_coleta" class="form-label">Data de Coleta</label>
+                        <input type="date" class="form-control" id="data_coleta" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="coletor" class="form-label">Coletor</label>
+                        <input type="text" class="form-control" id="coletor" required>
+                      </div>
+                      <button type="submit" class="btn btn-dark form-control">Adicionar</button>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
             
-
-            <script src="./assets/js/auth.js"></script>
 </body>
 
 </div>
@@ -429,6 +471,8 @@
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
+
+<script src="./assets/js/auth.js"></script>
 
 </body>
 
