@@ -212,7 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = response.json();
         if (data.success) {
           alert("Item adicionado com sucesso!");
-          addItemModal.hide(); // Fecha o modal
           location.reload(); // Recarrega os itens
         } else {
           alert(`Erro ao adicionar item: ${data.message}`);
