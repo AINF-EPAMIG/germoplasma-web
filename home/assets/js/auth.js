@@ -26,20 +26,12 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
 
       if (data.success) {
-        const { nivel_permissao } = data.data;
-
-        // Usuário logado: exibe "Minha Conta" e oculta "Login"
+        // Usuário logado: exibe "Minha Conta" e "Register", oculta "Login"
         if (minhaConta) minhaConta.style.display = "block";
+        if (register) register.style.display = "block";
         if (login) login.style.display = "none";
-
-        // Exibir "Register" apenas para usuários com nível de permissão 1
-        if (nivel_permissao === 1 && register) {
-          register.style.display = "block";
-        } else if (register) {
-          register.style.display = "none";
-        }
       } else {
-        // Usuário não logado: exibe "Login" e oculta "Minha Conta" e "Register"
+        // Usuário não logado: exibe "Login", oculta "Minha Conta" e "Register"
         if (minhaConta) minhaConta.style.display = "none";
         if (register) register.style.display = "none";
         if (login) login.style.display = "block";
