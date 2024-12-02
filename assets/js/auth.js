@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((data) => {
           if (data.success) {
             alert(data.message);
-            window.location.href = "/germoplasma/home/index.html";
+            window.location.href = "/germoplasma/index.html";
           } else {
             alert(`Erro: ${data.message}`);
           }
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (data.success) {
           // Redirecionar para a página de login após logout
-          window.location.href = "/germoplasma/home/pages-login.html";
+          window.location.href = "/germoplasma/login.html";
         } else {
           alert("Erro ao realizar o logout. Tente novamente.");
         }

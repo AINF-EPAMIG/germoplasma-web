@@ -14,13 +14,13 @@ document.addEventListener("DOMContentLoaded", function () {
   
         if (!data.success) {
           // Redireciona para a página de login se o usuário não estiver logado
-          window.location.href = "/germoplasma/home/login.html";
+          window.location.href = "/germoplasma/login.html";
         }
   
         return data.data; // Retorna os dados do usuário logado
       } catch (error) {
         console.error("Erro ao verificar login:", error);
-        window.location.href = "/germoplasma/home/login.html";
+        window.location.href = "/germoplasma/login.html";
       }
     }
   
