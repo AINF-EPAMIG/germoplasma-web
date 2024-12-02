@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Botao adicionar +
   const addItemButton = document.getElementById("addItemButton");
 
+  // Selecionar o modal
+  const addItemModal = new bootstrap.Modal(document.getElementById("addItemModal"));
+
   // Ocultar itens do menu inicialmente
   if (minhaConta) minhaConta.style.display = "none";
   if (register) register.style.display = "none";
@@ -174,9 +177,11 @@ document.addEventListener("DOMContentLoaded", function () {
     renderItems();
   });
 
-  addItemButton.addEventListener("click", function () {
-    addItemModal.show(); // Exibe o modal
-  });
+  if (addItemButton) {
+    addItemButton.addEventListener("click", function () {
+      addItemModal.show(); // Exibe o modal
+    });
+  }
 
   const addItemForm = document.getElementById("addItemForm");
   // Submissão do formulário para adicionar novo item
