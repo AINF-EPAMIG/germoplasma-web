@@ -174,11 +174,9 @@ document.addEventListener("DOMContentLoaded", function () {
     renderItems();
   });
 
-  if (addItemButton) {
-    addItemButton.addEventListener("click", function () {
-      addItemModal.show(); // Exibe o modal
-    });
-  }
+  addItemButton.addEventListener("click", function () {
+    addItemModal.show(); // Exibe o modal
+  });
 
   const addItemForm = document.getElementById("addItemForm");
   // Submissão do formulário para adicionar novo item
