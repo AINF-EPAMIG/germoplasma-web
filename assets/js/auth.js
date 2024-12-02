@@ -186,8 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const addItemForm = document.getElementById("addItemForm");
   // Submissão do formulário para adicionar novo item
   if (addItemForm) {
-    addItemForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
+    addItemSubmit.addEventListener("click", function () {
 
       const newItem = {
         numero_acesso: document.getElementById("numero_acesso").value.trim(),
@@ -201,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
 
       try {
-        const response = await fetch("https://www.epamig.tech/germoplasma/add_item.php", {
+        const response = fetch("https://www.epamig.tech/germoplasma/add_item.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -210,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
           credentials: "include",
         });
 
-        const data = await response.json();
+        const data = response.json();
         if (data.success) {
           alert("Item adicionado com sucesso!");
           addItemModal.hide(); // Fecha o modal
