@@ -1,6 +1,6 @@
 <IfModule mod_headers.c>
     # Configurações de CORS
-    Header set Access-Control-Allow-Origin "https://www.epamig.br"
+    Header set Access-Control-Allow-Origin "https://epamig.tech"
     Header set Access-Control-Allow-Credentials "true"
     Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
     Header set Access-Control-Allow-Headers "Content-Type, Authorization"
