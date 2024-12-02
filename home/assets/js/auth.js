@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const url = "https://www.epamig.tech/germoplasma/usuarios.php";
 
+  // Selecionar os itens do menu
+  const minhaConta = document.getElementById("minhaConta");
+  const cadastrar = document.getElementById("cadastrar");
+  const login = document.getElementById("login");
+
   // Função para verificar e atualizar os dados do usuário
   async function fetchUserData() {
     try {
@@ -14,38 +19,30 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       const data = await response.json();
-      const userProfile = document.getElementById("userProfile");
 
       if (data.success) {
-        // Atualizar os dados do usuário no menu
-        document.getElementById("userName").textContent = data.data.nome;
-        document.getElementById("dropdownUserName").textContent =
-          data.data.nome;
-        document.getElementById("dropdownUserRole").textContent =
-          data.data.role || "User";
+        const { nivel_permissao } = data.data;
 
-        // Exibir o ícone do usuário
-        if (userProfile) userProfile.style.display = "flex";
+        // Usuário logado: exibe "Minha Conta" e oculta "Login"
+        if (minhaConta) minhaConta.style.display = "block";
+        if (login) login.style.display = "none";
 
-        // Exibir botão de adicionar item, caso aplicável
-        const addItemButton = document.getElementById("addItemButton");
-        if (addItemButton) addItemButton.style.display = "block";
+        // Exibir "cadastrar" apenas para usuários com nível de permissão 1
+        if (nivel_permissao === 1 && cadastrar) {
+          cadastrar.style.display = "block";
+        } else if (cadastrar) {
+          cadastrar.style.display = "none";
+        }
       } else {
-        console.log("Usuário não autenticado ou sessão expirada.");
-
-        // Ocultar o ícone do usuário
-        if (userProfile) userProfile.style.display = "none";
-
-        // Opcional: redirecionar para login ou exibir mensagem
-        // window.location.href = './pages-login.html';
+        // Usuário não logado: exibe "Login" e oculta "Minha Conta" e "Cadastrar"
+        if (minhaConta) minhaConta.style.display = "none";
+        if (cadastrar) cadastrar.style.display = "none";
+        if (login) login.style.display = "block";
       }
     } catch (error) {
       console.error("Erro ao buscar dados do usuário:", error);
     }
   }
-
-  // Chamar a função de verificação inicial
-  fetchUserData();
 
   // Logout
   document
@@ -83,6 +80,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function renderItems() {
     const tbody = document.getElementById("germoplasma_cafe");
+    if (!tbody) return;
+
     tbody.innerHTML = "";
 
     const itemsToShow = allData.slice(0, currentIndex + itemsPerPage);
@@ -113,13 +112,16 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error fetching data:", error);
     });
 
-  document.getElementById("loadMore").addEventListener("click", function () {
+  document.getElementById("loadMore")?.addEventListener("click", function () {
     currentIndex += itemsPerPage;
     renderItems();
   });
 
-  document.getElementById("loadAll").addEventListener("click", function () {
+  document.getElementById("loadAll")?.addEventListener("click", function () {
     currentIndex = allData.length;
     renderItems();
   });
+
+  // Chamar a função de verificação inicial
+  fetchUserData();
 });

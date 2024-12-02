@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Login/Register</title>
+  <title>Login</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -26,41 +26,26 @@
 
               <div class="d-flex justify-content-center py-4">
                 <a href="#" class="logo d-flex align-items-center w-auto">
-                  <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Login/Register</span>
+                  <span class="d-none d-lg-block">Login - Germoplasma</span>
                 </a>
               </div>
 
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Access Your Account</h5>
-                    <p class="text-center small">Enter your details to login or register</p>
-                  </div>
+                  <img src="assets/img/logo_epamig.svg" alt="logo" style="height: 60px; margin: 10px auto; display: block;">
 
-                  <!-- Formulário de Login/Cadastro -->
-                  <form id="authForm" class="row g-3">
+                  <!-- Formulário de Login -->
+                  <form id="loginForm" class="row g-3">
                     <div class="col-12">
                       <label for="email" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                      <input type="email" class="form-control" id="email" placeholder="exemplo@epamig.br" required>
                     </div>
                     <div class="col-12">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                    </div>
-                    <div class="col-12" id="nameField" style="display: none;">
-                      <label for="nome" class="form-label">Name</label>
-                      <input type="text" class="form-control" id="nome" placeholder="Enter your name">
+                      <label for="password" class="form-label">Senha</label>
+                      <input type="password" class="form-control" id="password" placeholder="digite sua senha" required>
                     </div>
                     <div class="col-12">
-                      <label for="action" class="form-label">Action</label>
-                      <select id="action" class="form-select" required>
-                        <option value="login">Login</option>
-                        <option value="register">Register</option>
-                      </select>
-                    </div>
-                    <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Submit</button>
+                      <button class="btn btn-dark w-100" type="submit">Login</button>
                     </div>
                   </form>
                   <!-- Fim do Formulário -->
@@ -69,30 +54,36 @@
 
             </div>
           </div>
+
+          
         </div>
-
+        
+        <footer id="footer" class="footer">
+          <div class="copyright">
+            &copy; Todos os direitos reservados - EPAMIG - Empresa de Pesquisa Agropecuária de Minas Gerais - Desenvolvimento: AINF - Assessoria de Informática
+          </div>
+        </footer>
       </section>
-
     </div>
+
+    
   </main>
 
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
-    document.getElementById("authForm").addEventListener("submit", function (event) {
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
       event.preventDefault(); // Impede o comportamento padrão do formulário
 
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
-      const action = document.getElementById("action").value;
-      const nome = document.getElementById("nome").value.trim(); // Captura o campo nome
 
       // Validação básica
-      if (!email || !password || (action === "register" && !nome)) {
+      if (!email || !password) {
         alert("Please fill in all required fields.");
         return;
       }
 
-      // URL do arquivo PHP que lida com login/cadastro
+      // URL do arquivo PHP que lida com login
       const url = 'https://www.epamig.tech/germoplasma/usuarios.php';
 
       // Envia os dados para o servidor
@@ -101,19 +92,14 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ action, email, password, nome }) // Inclui 'nome' no registro
+        body: JSON.stringify({ action: 'login', email, password })
       })
         .then(response => response.json())
         .then(data => {
           if (data.success) {
             alert(data.message);
-            if (action === "login") {
-              // Redireciona para o dashboard em caso de login bem-sucedido
-              window.location.href = '/germoplasma/home/';
-            } else {
-              // Mensagem de sucesso para registro
-              alert('Registration successful. You can now log in.');
-            }
+            // Redireciona para o dashboard em caso de login bem-sucedido
+            window.location.href = '/germoplasma/home/';
           } else {
             alert(data.message);
           }
@@ -122,16 +108,6 @@
           console.error('Error:', error);
           alert('An error occurred. Please try again.');
         });
-    });
-
-    // Exibe ou oculta o campo "nome" com base na ação selecionada
-    document.getElementById("action").addEventListener("change", function () {
-      const nameField = document.getElementById("nameField");
-      if (this.value === "register") {
-        nameField.style.display = "block"; // Exibe o campo nome
-      } else {
-        nameField.style.display = "none"; // Oculta o campo nome
-      }
     });
   </script>
 </body>
