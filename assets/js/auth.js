@@ -189,9 +189,6 @@ document.addEventListener("DOMContentLoaded", function () {
     addItemForm.addEventListener("submit", async function (event) {
       event.preventDefault();
 
-      const submitButton = event.target.querySelector("button[type='submit']");
-      submitButton.disabled = true; // Desativa o botão
-
       const newItem = {
         numero_acesso: document.getElementById("numero_acesso").value.trim(),
         designacao_material: document.getElementById("designacao_material").value.trim(),
@@ -217,14 +214,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.success) {
           alert("Item adicionado com sucesso!");
           addItemModal.hide(); // Fecha o modal
+          location.reload(); // Recarrega os itens
         } else {
           alert(`Erro ao adicionar item: ${data.message}`);
         }
       } catch (error) {
         console.error("Erro ao adicionar item:", error);
         alert("Ocorreu um erro ao adicionar o item.");
-      }finally {
-        submitButton.disabled = false; // Reativa o botão
       }
     });
   }
