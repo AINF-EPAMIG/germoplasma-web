@@ -7,18 +7,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const login = document.getElementById("login");
   const logout = document.getElementById("logout");
 
-  // Botao adicionar +
+  // Botão adicionar +
   const addItemButton = document.getElementById("addItemButton");
 
   // Selecionar o modal
   const addItemModal = new bootstrap.Modal(document.getElementById("addItemModal"));
 
   // Ocultar itens do menu inicialmente
-  if (minhaConta) minhaConta.style.display = "none";
-  if (register) register.style.display = "none";
-  if (login) login.style.display = "none";
-  if (logout) logout.style.display = "none";
-  if (addItemButton) addItemButton.style.display = "none";
+  function hideMenuItems() {
+    if (minhaConta) minhaConta.style.display = "none";
+    if (register) register.style.display = "none";
+    if (login) login.style.display = "none";
+    if (logout) logout.style.display = "none";
+    if (addItemButton) addItemButton.style.display = "none";
+  }
+
+  hideMenuItems(); // Inicialmente esconde todos os itens
 
   // Função para verificar e atualizar os dados do usuário
   async function fetchUserData() {
@@ -43,71 +47,23 @@ document.addEventListener("DOMContentLoaded", function () {
         if (addItemButton) addItemButton.style.display = "block";
       } else {
         // Usuário não logado: exibe "Login", oculta "Minha Conta", "Register", "Sair", e botão para adicionar mais itens
-        if (minhaConta) minhaConta.style.display = "none";
-        if (register) register.style.display = "none";
+        hideMenuItems();
         if (login) login.style.display = "block";
-        if (logout) logout.style.display = "none";
-        if (addItemButton) addItemButton.style.display = "none";
       }
     } catch (error) {
       console.error("Erro ao buscar dados do usuário:", error);
-
-      // Como fallback, exibe apenas o "Login" para usuários não autenticados
-      if (minhaConta) minhaConta.style.display = "none";
-      if (register) register.style.display = "none";
+      hideMenuItems();
       if (login) login.style.display = "block";
-      if (logout) logout.style.display = "none";
-      if (addItemButton) addItemButton.style.display = "none";
     }
   }
 
   // Chamar a função de verificação inicial
   fetchUserData();
 
-  // Cadastro Usuarios
-  document
-    .getElementById("registerForm")
-    ?.addEventListener("submit", function (event) {
-      event.preventDefault();
+  // Verificador contínuo a cada 5 segundos
+  setInterval(fetchUserData, 5000);
 
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (!name || !email || !password) {
-        alert("Por favor, preencha todos os campos.");
-        return;
-      }
-
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          action: "register",
-          nome: name,
-          email,
-          password,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            alert(data.message);
-            window.location.href = "/germoplasma/index.html";
-          } else {
-            alert(`Erro: ${data.message}`);
-          }
-        })
-        .catch((error) => {
-          console.error("Erro ao registrar:", error);
-          alert("Ocorreu um erro ao registrar. Tente novamente.");
-        });
-    });
-
-  // logout
-  
+  // Lógica de Logout
   const logoutLink = document.getElementById("logout");
 
   if (logoutLink) {
@@ -205,7 +161,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const addItemForm = document.getElementById("addItemForm");
   // Submissão do formulário para adicionar novo item
   if (addItemForm) {
-    addItemSubmit.addEventListener("click", function () {
+    addItemForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
 
       const newItem = {
         numero_acesso: document.getElementById("numero_acesso").value.trim(),
@@ -219,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
       };
 
       try {
-        const response = fetch("https://www.epamig.tech/germoplasma/add_item.php", {
+        const response = await fetch("https://www.epamig.tech/germoplasma/add_item.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -228,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
           credentials: "include",
         });
 
-        const data = response.json();
+        const data = await response.json();
         if (data.success) {
           alert("Item adicionado com sucesso!");
           location.reload(); // Recarrega os itens
