@@ -110,33 +110,34 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
   // Lógica de Logout
-  const logoutLink = document.getElementById("logout", "logout-register", "logout-minhaconta");
+  const logoutButtons = document.querySelectorAll(".logout-button");
 
-  if (logoutLink) {
-    logoutLink.addEventListener("click", async function (event) {
-      event.preventDefault(); // Impede a navegação padrão do link
+    logoutButtons.forEach((button) => {
+      button.addEventListener("click", async function (event) {
+        event.preventDefault(); // Impede a navegação padrão do link
 
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ action: "logout" }),
-          credentials: "include",
-        });
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ action: "logout" }),
+            credentials: "include",
+          });
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (data.success) {
-          console.log("Logout realizado com sucesso");
-          location.reload()
+          if (data.success) {
+            console.log("Logout realizado com sucesso");
+            location.reload();
+          }
+        } catch (error) {
+          console.error("Erro ao realizar o logout:", error);
         }
-      } catch (error) {
-        console.error("Erro ao realizar o logout:", error);
-      }
+      });
     });
-  }
+
 
   // Renderizar tabela de itens
   let currentIndex = 0;
