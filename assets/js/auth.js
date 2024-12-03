@@ -60,56 +60,54 @@ document.addEventListener("DOMContentLoaded", function () {
   // Chamar a função de verificação inicial
   fetchUserData();
 
-  // Verificador contínuo a cada 5 segundos
-  setInterval(fetchUserData, 5000);
+  // Verificador contínuo a cada 2 segundos
+  setInterval(fetchUserData, 2000);
 
   // Lógica de Login
   const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", async function (event) {
-      event.preventDefault(); // Impede o envio padrão do formulário
-  
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const loginError = document.getElementById("loginError");
-  
-      if (loginError) loginError.style.display = "none"; // Esconde qualquer mensagem de erro anterior
-  
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            action: "login",
-            email: email,
-            password: password,
-          }),
-          credentials: "include",
-        });
-  
-        const data = await response.json();
-  
-        if (data.success) {
-          console.log("Login realizado com sucesso");
-          window.location.href = "/dashboard"; // Redireciona para a página de dashboard
-        } else {
-          // Exibe a mensagem de erro no DOM
-          if (loginError) {
-            loginError.textContent = data.message || "Erro ao realizar login.";
-            loginError.style.display = "block";
+      if (loginForm) {
+        loginForm.addEventListener("submit", async function (event) {
+          event.preventDefault(); // Impede o envio padrão do formulário
+      
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value.trim();
+          const loginError = document.getElementById("loginError");
+      
+          if (loginError) loginError.style.display = "none";
+      
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                action: "login",
+                email: email,
+                password: password,
+              }),
+              credentials: "include",
+            });
+      
+            const data = await response.json();
+            console.log(data); // Verifique o formato no console
+      
+            if (data.success) {
+              console.log("Login realizado com sucesso");
+              window.location.href = "/dashboard";
+            } else if (loginError) {
+              loginError.textContent = data.message || "Erro ao realizar login.";
+              loginError.style.display = "block";
+            }
+          } catch (error) {
+            console.error("Erro na requisição de login:", error);
+            if (loginError) {
+              loginError.textContent = "Erro ao conectar ao servidor.";
+              loginError.style.display = "block";
+            }
           }
-        }
-      } catch (error) {
-        console.error("Erro na requisição de login:", error);
-        if (loginError) {
-          loginError.textContent = "Ocorreu um erro ao tentar realizar o login.";
-          loginError.style.display = "block";
-        }
+        });
       }
-    });
-  }  
 
   // Lógica de Logout
   const logoutLink = document.getElementById("logout");

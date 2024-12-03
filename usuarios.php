@@ -1,8 +1,15 @@
 <?php
+// Inicia o buffer de saída para evitar mensagens inesperadas
+ob_start();
 header("Access-Control-Allow-Origin: https://epamig.tech");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
+
+// Configurações de erro (desativa exibição, habilita log)
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
 
 session_start();
 require 'database.php'; // Inclua a conexão com o banco de dados
@@ -12,6 +19,7 @@ $action = $data->action ?? null;
 
 if (!$action) {
     echo json_encode(["success" => false, "message" => "Ação é obrigatória.", "data" => []]);
+    ob_end_clean();
     exit;
 }
 
@@ -22,11 +30,13 @@ if ($action === "register") {
 
     if (!$nome || !$email || !$password) {
         echo json_encode(["success" => false, "message" => "Todos os campos são obrigatórios.", "data" => []]);
+        ob_end_clean();
         exit;
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode(["success" => false, "message" => "E-mail inválido.", "data" => []]);
+        ob_end_clean();
         exit;
     }
 
@@ -37,12 +47,13 @@ if ($action === "register") {
 
     if ($result->num_rows > 0) {
         echo json_encode(["success" => false, "message" => "E-mail já está em uso.", "data" => []]);
+        ob_end_clean();
         exit;
     }
 
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha, nivel_permissao, status, data_cadastro) VALUES (?, ?, ?, ?, ?, ?)");
-    $nivel_permissao = 1; 
+    $nivel_permissao = 1;
     $status = 1;
     $data_cadastro = date('Y-m-d H:i:s');
     $stmt->bind_param("sssiss", $nome, $email, $hashedPassword, $nivel_permissao, $status, $data_cadastro);
@@ -52,6 +63,7 @@ if ($action === "register") {
     } else {
         echo json_encode(["success" => false, "message" => "Erro ao cadastrar usuário.", "data" => []]);
     }
+    ob_end_clean();
     exit;
 } elseif ($action === "login") {
     $email = $data->email ?? null;
@@ -59,6 +71,7 @@ if ($action === "register") {
 
     if (!$email || !$password) {
         echo json_encode(["success" => false, "message" => "Email e senha são obrigatórios.", "data" => []]);
+        ob_end_clean();
         exit;
     }
 
@@ -69,6 +82,7 @@ if ($action === "register") {
 
     if ($result->num_rows === 0) {
         echo json_encode(["success" => false, "message" => "E-mail ou senha inválidos.", "data" => []]);
+        ob_end_clean();
         exit;
     }
 
@@ -76,6 +90,7 @@ if ($action === "register") {
 
     if ($user['status'] == 0) {
         echo json_encode(["success" => false, "message" => "Usuário inativo.", "data" => []]);
+        ob_end_clean();
         exit;
     }
 
@@ -83,11 +98,12 @@ if ($action === "register") {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['nome'];
 
-        unset($user['senha']); 
+        unset($user['senha']); // Não retornar a senha
         echo json_encode(["success" => true, "data" => $user]);
     } else {
         echo json_encode(["success" => false, "message" => "E-mail ou senha inválidos.", "data" => []]);
     }
+    ob_end_clean();
     exit;
 } elseif ($action === "get_user") {
     if (isset($_SESSION['user_id'])) {
@@ -106,6 +122,7 @@ if ($action === "register") {
     } else {
         echo json_encode(["success" => false, "message" => "Usuário não logado.", "data" => []]);
     }
+    ob_end_clean();
     exit;
 } elseif ($action === "change_password") {
     if (isset($_SESSION['user_id'])) {
@@ -115,6 +132,7 @@ if ($action === "register") {
 
         if (!$current_password || !$new_password) {
             echo json_encode(["success" => false, "message" => "Todos os campos são obrigatórios.", "data" => []]);
+            ob_end_clean();
             exit;
         }
 
@@ -145,15 +163,19 @@ if ($action === "register") {
     } else {
         echo json_encode(["success" => false, "message" => "Usuário não logado.", "data" => []]);
     }
+    ob_end_clean();
     exit;
-}
-
-if ($action === "logout") {
+} elseif ($action === "logout") {
     session_start();
     session_unset();
     session_destroy();
 
     echo json_encode(["success" => true]); // Apenas retorna o sucesso
+    ob_end_clean();
     exit;
 }
+
+// Finaliza o buffer caso nenhuma ação seja executada
+ob_end_clean();
+exit;
 ?>
