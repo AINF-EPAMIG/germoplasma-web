@@ -106,42 +106,48 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-  // Logout
-  document.getElementById("logout")?.addEventListener("click", async function (event) {
-    event.preventDefault();
+  // logout
   
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ action: "logout" }),
-        credentials: "include", // Necessário para enviar cookies
-      });
-  
-      // Verifica se a resposta está vazia ou não é JSON
-      const text = await response.text(); // Tente obter o texto cru
-      console.log("Resposta do logout (bruta):", text);
-  
-      let data;
+  const logoutLink = document.getElementById("logout");
+
+  if (logoutLink) {
+    logoutLink.addEventListener("click", async function (event) {
+      event.preventDefault(); // Impede a navegação padrão do link
+
       try {
-        data = JSON.parse(text);
-      } catch (err) {
-        throw new Error("A resposta não está no formato JSON válido.");
+        // Faz a requisição POST para realizar o logout
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ action: "logout" }), // Envia a ação "logout"
+          credentials: "include", // Inclui cookies na requisição
+        });
+
+        const text = await response.text(); // Lê a resposta como texto bruto
+        console.log("Resposta do logout (bruta):", text);
+
+        let data;
+        try {
+          data = JSON.parse(text); // Tenta converter para JSON
+        } catch (error) {
+          throw new Error("A resposta não está no formato JSON válido.");
+        }
+
+        // Processa o resultado
+        if (data.success) {
+          alert(data.message || "Logout realizado com sucesso.");
+          window.location.href = "/"; // Redireciona para a página inicial
+        } else {
+          alert(data.message || "Erro ao realizar o logout. Tente novamente.");
+        }
+      } catch (error) {
+        console.error("Erro ao realizar o logout:", error);
+        alert("Ocorreu um erro ao tentar realizar o logout.");
       }
-  
-      if (data.success) {
-        location.reload(); // Recarrega a página
-      } else {
-        alert(`Erro ao realizar o logout: ${data.message || "Resposta inesperada."}`);
-      }
-    } catch (error) {
-      console.error("Erro ao realizar o logout:", error);
-      alert("Ocorreu um erro ao tentar realizar o logout.");
-    }
-  });
-  
+    });
+  }
 
   // Renderizar tabela de itens
   let currentIndex = 0;

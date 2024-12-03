@@ -147,4 +147,13 @@ if ($action === "register") {
         echo json_encode(["success" => false, "message" => "Usuário não logado.", "data" => []]);
     }
 }
+
+if ($action === "logout") {
+    session_start();
+    session_unset(); // Remove todas as variáveis de sessão
+    session_destroy(); // Destroi a sessão
+
+    echo json_encode(["success" => true, "message" => "Logout realizado com sucesso."]);
+    exit;
+}
 ?>
