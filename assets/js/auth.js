@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (logout) logout.style.display = "block";
         if (addItemButton) addItemButton.style.display = "block";
       } else {
-        // Usuário não logado: exibe "Login", oculta "Minha Conta", "Register", "Sair", e botão para adicionar mais itens
+        // Usuário não logado: exibe "Login", oculta outros itens
         hideMenuItems();
         if (login) login.style.display = "block";
       }
@@ -63,6 +63,55 @@ document.addEventListener("DOMContentLoaded", function () {
   // Verificador contínuo a cada 5 segundos
   setInterval(fetchUserData, 5000);
 
+  // Lógica de Login
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async function (event) {
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const loginError = document.getElementById("loginError");
+
+      if (loginError) loginError.style.display = "none"; // Esconde qualquer mensagem de erro anterior
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            action: "login",
+            email: email,
+            password: password,
+          }),
+          credentials: "include",
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Login bem-sucedido: redirecione ou atualize a interface
+          console.log("Login realizado com sucesso:", data.data);
+          window.location.href = "/dashboard"; // Redirecione para o dashboard
+        } else {
+          // Exibe a mensagem de erro
+          if (loginError) {
+            loginError.textContent = data.message || "Erro ao realizar login.";
+            loginError.style.display = "block";
+          }
+        }
+      } catch (error) {
+        console.error("Erro na requisição de login:", error);
+        if (loginError) {
+          loginError.textContent = "Ocorreu um erro ao tentar realizar o login.";
+          loginError.style.display = "block";
+        }
+      }
+    });
+  }
+
   // Lógica de Logout
   const logoutLink = document.getElementById("logout");
 
@@ -71,29 +120,23 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault(); // Impede a navegação padrão do link
 
       try {
-        // Faz a requisição POST para realizar o logout
         const response = await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ action: "logout" }), // Envia a ação "logout"
-          credentials: "include", // Inclui cookies na requisição
+          body: JSON.stringify({ action: "logout" }),
+          credentials: "include",
         });
 
-        const text = await response.text(); // Lê a resposta como texto bruto
-        console.log("Resposta do logout (bruta):", text);
+        const data = await response.json();
 
-        let data;
-        try {
-          data = JSON.parse(text); // Tenta converter para JSON
-        } catch (error) {
-          throw new Error("A resposta não está no formato JSON válido.");
+        if (data.success) {
+          console.log("Logout realizado com sucesso");
+          window.location.href = "/login"; // Redirecione para a página de login
         }
-
       } catch (error) {
         console.error("Erro ao realizar o logout:", error);
-        alert("Ocorreu um erro ao tentar realizar o logout.");
       }
     });
   }
@@ -152,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const addItemForm = document.getElementById("addItemForm");
-  // Submissão do formulário para adicionar novo item
   if (addItemForm) {
     addItemForm.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -182,11 +224,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.success) {
           location.reload(); // Recarrega os itens
         } else {
-          alert(`Erro ao adicionar item: ${data.message}`);
+          console.error(`Erro ao adicionar item: ${data.message}`);
         }
       } catch (error) {
         console.error("Erro ao adicionar item:", error);
-        alert("Ocorreu um erro ao adicionar o item.");
       }
     });
   }
