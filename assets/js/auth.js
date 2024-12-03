@@ -107,32 +107,41 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   // Logout
-  document
-    .getElementById("logout")
-    ?.addEventListener("click", async function (event) {
-      event.preventDefault();
-
+  document.getElementById("logout")?.addEventListener("click", async function (event) {
+    event.preventDefault();
+  
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action: "logout" }),
+        credentials: "include", // Necessário para enviar cookies
+      });
+  
+      // Verifica se a resposta está vazia ou não é JSON
+      const text = await response.text(); // Tente obter o texto cru
+      console.log("Resposta do logout (bruta):", text);
+  
+      let data;
       try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ action: "logout" }),
-          credentials: "include", // Necessário para enviar cookies
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          location.reload();
-        } else {
-          alert("Erro ao realizar o logout. Tente novamente.");
-        }
-      } catch (error) {
-        console.error("Erro ao realizar o logout:", error);
+        data = JSON.parse(text);
+      } catch (err) {
+        throw new Error("A resposta não está no formato JSON válido.");
       }
-    });
+  
+      if (data.success) {
+        location.reload(); // Recarrega a página
+      } else {
+        alert(`Erro ao realizar o logout: ${data.message || "Resposta inesperada."}`);
+      }
+    } catch (error) {
+      console.error("Erro ao realizar o logout:", error);
+      alert("Ocorreu um erro ao tentar realizar o logout.");
+    }
+  });
+  
 
   // Renderizar tabela de itens
   let currentIndex = 0;
