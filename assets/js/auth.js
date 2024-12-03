@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
   // Lógica de Logout
-  const logoutLink = document.getElementsByClassName("logout");
+  const logoutLink = document.getElementById("logout", "logout-register", "logout-minhaconta");
 
   if (logoutLink) {
     logoutLink.addEventListener("click", async function (event) {
