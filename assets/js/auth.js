@@ -68,13 +68,13 @@ document.addEventListener("DOMContentLoaded", function () {
   if (loginForm) {
     loginForm.addEventListener("submit", async function (event) {
       event.preventDefault(); // Impede o envio padrão do formulário
-
+  
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
       const loginError = document.getElementById("loginError");
-
+  
       if (loginError) loginError.style.display = "none"; // Esconde qualquer mensagem de erro anterior
-
+  
       try {
         const response = await fetch(url, {
           method: "POST",
@@ -88,14 +88,19 @@ document.addEventListener("DOMContentLoaded", function () {
           }),
           credentials: "include",
         });
-
+  
         const data = await response.json();
-
+  
         if (data.success) {
           console.log("Login realizado com sucesso");
-          window.location.href = "/dashboard";
-        } 
-
+          window.location.href = "/dashboard"; // Redireciona para a página de dashboard
+        } else {
+          // Exibe a mensagem de erro no DOM
+          if (loginError) {
+            loginError.textContent = data.message || "Erro ao realizar login.";
+            loginError.style.display = "block";
+          }
+        }
       } catch (error) {
         console.error("Erro na requisição de login:", error);
         if (loginError) {
@@ -104,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     });
-  }
+  }  
 
   // Lógica de Logout
   const logoutLink = document.getElementById("logout");
