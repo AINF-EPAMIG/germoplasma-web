@@ -30,8 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
   
       if (userData) {
         // Atualiza os campos do perfil
-        document.getElementById("dropdownUserName").textContent = userData.nome || "Usuário";
-        document.getElementById("userName").textContent = userData.nome || "User";
         document.getElementById("nomeusuario").textContent = userData.nome || "Nome não encontrado";
         document.getElementById("emailusuario").textContent = userData.email || "Email não disponível";
         document.getElementById("datacadastrousuario").textContent = userData.data_cadastro || "Data não disponível";
