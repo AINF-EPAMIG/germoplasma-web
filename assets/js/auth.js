@@ -92,16 +92,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = await response.json();
 
         if (data.success) {
-          // Login bem-sucedido: redirecione ou atualize a interface
-          console.log("Login realizado com sucesso:", data.data);
           window.location.href = "/dashboard"; // Redirecione para o dashboard
-        } else {
-          // Exibe a mensagem de erro
-          if (loginError) {
-            loginError.textContent = data.message || "Erro ao realizar login.";
-            loginError.style.display = "block";
-          }
-        }
+        } 
       } catch (error) {
         console.error("Erro na requisição de login:", error);
         if (loginError) {
@@ -133,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (data.success) {
           console.log("Logout realizado com sucesso");
-          window.location.href = "/login"; // Redirecione para a página de login
+          window.location.href = "/dashboard";
         }
       } catch (error) {
         console.error("Erro ao realizar o logout:", error);
