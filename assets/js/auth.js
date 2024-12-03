@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const minhaConta = document.getElementById("minhaConta");
   const register = document.getElementById("register");
   const login = document.getElementById("login");
+  const logout = document.getElementById("logout");
 
   // Botao adicionar +
   const addItemButton = document.getElementById("addItemButton");
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (minhaConta) minhaConta.style.display = "none";
   if (register) register.style.display = "none";
   if (login) login.style.display = "none";
+  if (logout) logout.style.display = "none";
   if (addItemButton) addItemButton.style.display = "none";
 
   // Função para verificar e atualizar os dados do usuário
@@ -33,16 +35,18 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
 
       if (data.success) {
-        // Usuário logado: exibe "Minha Conta" e "Register", oculta "Login"
+        // Usuário logado: exibe "Minha Conta", "Register", "Sair", e botão para adicionar mais itens, oculta "Login"
         if (minhaConta) minhaConta.style.display = "block";
         if (register) register.style.display = "block";
         if (login) login.style.display = "none";
+        if (logout) logout.style.display = "block";
         if (addItemButton) addItemButton.style.display = "block";
       } else {
-        // Usuário não logado: exibe "Login", oculta "Minha Conta" e "Register"
+        // Usuário não logado: exibe "Login", oculta "Minha Conta", "Register", "Sair", e botão para adicionar mais itens
         if (minhaConta) minhaConta.style.display = "none";
         if (register) register.style.display = "none";
         if (login) login.style.display = "block";
+        if (logout) logout.style.display = "none";
         if (addItemButton) addItemButton.style.display = "none";
       }
     } catch (error) {
@@ -52,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (minhaConta) minhaConta.style.display = "none";
       if (register) register.style.display = "none";
       if (login) login.style.display = "block";
+      if (logout) logout.style.display = "none";
       if (addItemButton) addItemButton.style.display = "none";
     }
   }
@@ -103,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Logout
   document
-    .getElementById("logoutButton")
+    .getElementById("logout")
     ?.addEventListener("click", async function (event) {
       event.preventDefault();
 
@@ -120,8 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = await response.json();
 
         if (data.success) {
-          // Redirecionar para a página de login após logout
-          window.location.href = "/germoplasma/login.html";
+          location.reload();
         } else {
           alert("Erro ao realizar o logout. Tente novamente.");
         }
