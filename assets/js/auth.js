@@ -91,12 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
           throw new Error("A resposta não está no formato JSON válido.");
         }
 
-        // Processa o resultado
-        if (data.success) {
-          alert(data.message || "Logout realizado com sucesso.");
-        } else {
-          alert(data.message || "Erro ao realizar o logout. Tente novamente.");
-        }
       } catch (error) {
         console.error("Erro ao realizar o logout:", error);
         alert("Ocorreu um erro ao tentar realizar o logout.");
@@ -186,7 +180,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const data = await response.json();
         if (data.success) {
-          alert("Item adicionado com sucesso!");
           location.reload(); // Recarrega os itens
         } else {
           alert(`Erro ao adicionar item: ${data.message}`);

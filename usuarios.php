@@ -16,7 +16,6 @@ if (!$action) {
 }
 
 if ($action === "register") {
-    // Lógica existente para registro de novos usuários
     $nome = htmlspecialchars($data->nome ?? '', ENT_QUOTES, 'UTF-8');
     $email = filter_var($data->email ?? '', FILTER_SANITIZE_EMAIL);
     $password = $data->password ?? '';
@@ -43,18 +42,15 @@ if ($action === "register") {
 
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha, nivel_permissao, status, data_cadastro) VALUES (?, ?, ?, ?, ?, ?)");
-    $nivel_permissao = 1; // Permissão padrão
-    $status = 1; // Ativo
+    $nivel_permissao = 1; 
+    $status = 1;
     $data_cadastro = date('Y-m-d H:i:s');
     $stmt->bind_param("sssiss", $nome, $email, $hashedPassword, $nivel_permissao, $status, $data_cadastro);
 
-    if ($stmt->execute()) {
-        echo json_encode(["success" => true, "message" => "Usuário cadastrado com sucesso.", "data" => []]);
-    } else {
+    if (!$stmt->execute()) {
         echo json_encode(["success" => false, "message" => "Erro ao cadastrar usuário.", "data" => []]);
     }
 } elseif ($action === "login") {
-    // Lógica existente para login
     $email = $data->email ?? null;
     $password = $data->password ?? null;
 
@@ -84,13 +80,12 @@ if ($action === "register") {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['nome'];
 
-        unset($user['senha']); // Não enviar a senha para o cliente
-        echo json_encode(["success" => true, "message" => "Login realizado com sucesso.", "data" => $user]);
+        unset($user['senha']); 
+        echo json_encode(["success" => true, "data" => $user]);
     } else {
         echo json_encode(["success" => false, "message" => "E-mail ou senha inválidos.", "data" => []]);
     }
 } elseif ($action === "get_user") {
-    // Lógica existente para obter dados do usuário logado
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
         $stmt = $conn->prepare("SELECT nome, email, DATE_FORMAT(data_cadastro, '%d/%m/%Y') as data_cadastro FROM usuarios WHERE id = ?");
@@ -108,7 +103,6 @@ if ($action === "register") {
         echo json_encode(["success" => false, "message" => "Usuário não logado.", "data" => []]);
     }
 } elseif ($action === "change_password") {
-    // Nova lógica para alteração de senha
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
         $current_password = $data->current_password ?? null;
@@ -132,9 +126,7 @@ if ($action === "register") {
                 $update_stmt = $conn->prepare("UPDATE usuarios SET senha = ? WHERE id = ?");
                 $update_stmt->bind_param("si", $hashedPassword, $user_id);
 
-                if ($update_stmt->execute()) {
-                    echo json_encode(["success" => true, "message" => "Senha alterada com sucesso."]);
-                } else {
+                if (!$update_stmt->execute()) {
                     echo json_encode(["success" => false, "message" => "Erro ao alterar a senha.", "data" => []]);
                 }
             } else {
@@ -150,10 +142,7 @@ if ($action === "register") {
 
 if ($action === "logout") {
     session_start();
-    session_unset(); // Remove todas as variáveis de sessão
-    session_destroy(); // Destroi a sessão
-
-    echo json_encode(["success" => true, "message" => "Logout realizado com sucesso."]);
-    exit;
+    session_unset();
+    session_destroy();
 }
 ?>
