@@ -94,7 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // Processa o resultado
         if (data.success) {
           alert(data.message || "Logout realizado com sucesso.");
-          window.location.href = "/"; // Redireciona para a página inicial
         } else {
           alert(data.message || "Erro ao realizar o logout. Tente novamente.");
         }
