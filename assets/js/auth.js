@@ -125,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (data.success) {
           console.log("Logout realizado com sucesso");
-          window.location.href = "/dashboard";
         }
       } catch (error) {
         console.error("Erro ao realizar o logout:", error);
