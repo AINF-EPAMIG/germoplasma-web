@@ -92,8 +92,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = await response.json();
 
         if (data.success) {
-          window.location.href = "/dashboard"; // Redirecione para o dashboard
+          console.log("Login realizado com sucesso");
+          window.location.href = "/dashboard";
         } 
+
       } catch (error) {
         console.error("Erro na requisição de login:", error);
         if (loginError) {
@@ -125,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (data.success) {
           console.log("Logout realizado com sucesso");
+          location.reload()
         }
       } catch (error) {
         console.error("Erro ao realizar o logout:", error);
