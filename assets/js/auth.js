@@ -106,36 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }
 
-  // Lógica de Logout
-  const logoutButton = document.getElementById("logout");
-
-  logoutButton.addEventListener("click", async function (event) {
-    event.preventDefault(); // Evita o comportamento padrão
-    try {
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ action: "logout" }),
-        credentials: "include", // Envia cookies se necessário
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        console.log("Logout realizado com sucesso");
-        window.location.href = "/dashboard"; // Redireciona para a tela inicial
-      } else {
-        console.error("Erro no logout:", data.message);
-      }
-    } catch (error) {
-      console.error("Erro ao realizar o logout:", error);
-    }
-  });
-
-
   // Renderizar tabela de itens
   let currentIndex = 0;
   let itemsPerPage = 20;
