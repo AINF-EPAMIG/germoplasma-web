@@ -35,11 +35,6 @@ if ($action === "register") {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        echo json_encode(["success" => false, "message" => "E-mail já está em uso.", "data" => []]);
-        exit;
-    }
-
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha, nivel_permissao, status, data_cadastro) VALUES (?, ?, ?, ?, ?, ?)");
     $nivel_permissao = 1; 
