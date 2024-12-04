@@ -142,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
 
       if (data.success) {
-        alert("Itens removidos com sucesso.");
         // Atualiza a tabela removendo as linhas excluídas
         allData = allData.filter(
           (item) =>
@@ -156,11 +155,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         renderItems();
       } else {
-        console.error("Erro ao remover itens:", data.message);
         alert(`Erro: ${data.message}`);
       }
     } catch (error) {
-      console.error("Erro ao remover itens:", error);
       alert("Erro ao tentar remover os itens.");
     }
   }
