@@ -48,11 +48,6 @@ $checkQuery->bind_result($count);
 $checkQuery->fetch();
 $checkQuery->close();
 
-if ($count > 0) {
-    echo json_encode(["success" => false, "message" => "Já existe um item com este número de acesso."]);
-    exit;
-}
-
 // Insere o novo item no banco de dados
 $stmt = $conn->prepare("INSERT INTO germoplasma_cafe (numero_acesso, designacao_material, local_coleta, proprietario, municipio_estado, idade_lavoura, data_coleta, coletor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 $stmt->bind_param(
