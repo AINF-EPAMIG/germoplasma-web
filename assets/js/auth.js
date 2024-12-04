@@ -234,7 +234,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
 
       if (data.success) {
-        alert("Item adicionado com sucesso.");
         allData.push(newItem); // Adiciona o item à lista local
         renderItems(); // Re-renderiza a tabela
         addItemModal.hide(); // Fecha o modal
@@ -243,9 +242,10 @@ document.addEventListener("DOMContentLoaded", function () {
         alert(`Erro: ${data.message}`);
       }
     } catch (error) {
+      addItemModal.hide(); // Fecha o modal
       console.error("Erro ao adicionar item:", error);
-      alert("Erro ao tentar adicionar o item. Tente novamente.");
     } finally {
+      addItemModal.hide(); // Fecha o modal
       addItemSubmit.disabled = false; // Reabilita o botão
     }
   }
