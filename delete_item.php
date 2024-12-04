@@ -21,22 +21,54 @@ if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
 // Lê e decodifica os dados enviados no corpo da requisição
 $data = json_decode(file_get_contents("php://input"));
 
-// Verifica se os IDs foram fornecidos e são válidos
-if (!isset($data->ids) || !is_array($data->ids)) {
-    echo json_encode(["success" => false, "message" => "IDs dos itens não fornecidos ou inválidos."]);
+// Verifica se os itens foram fornecidos e são válidos
+if (!isset($data->items) || !is_array($data->items)) {
+    echo json_encode(["success" => false, "message" => "Itens não fornecidos ou inválidos."]);
     exit;
 }
 
-// Sanitiza os IDs para prevenir injeção SQL
-$ids = implode(",", array_map("intval", $data->ids));
+// Prepara a consulta para exclusão
+$query = "DELETE FROM germoplasma_cafe 
+          WHERE numero_acesso = ? 
+          AND designacao_material = ? 
+          AND local_coleta = ? 
+          AND proprietario = ?";
 
-// Prepara a consulta de exclusão
-$query = "DELETE FROM germoplasma_cafe WHERE id IN ($ids)";
+$stmt = $conn->prepare($query);
 
-// Executa a consulta e retorna o resultado
-if ($conn->query($query)) {
-    echo json_encode(["success" => true, "message" => "Itens removidos com sucesso."]);
+// Valida se a preparação foi bem-sucedida
+if (!$stmt) {
+    echo json_encode(["success" => false, "message" => "Erro ao preparar a consulta."]);
+    exit;
+}
+
+// Executa a exclusão para cada item
+$deletedCount = 0;
+foreach ($data->items as $item) {
+    if (!isset($item->numero_acesso, $item->designacao_material, $item->local_coleta, $item->proprietario)) {
+        continue; // Ignora itens com dados incompletos
+    }
+
+    $stmt->bind_param(
+        "ssss",
+        $item->numero_acesso,
+        $item->designacao_material,
+        $item->local_coleta,
+        $item->proprietario
+    );
+
+    if ($stmt->execute()) {
+        $deletedCount++;
+    }
+}
+
+// Fecha o statement
+$stmt->close();
+
+// Retorna o resultado
+if ($deletedCount > 0) {
+    echo json_encode(["success" => true, "message" => "$deletedCount itens removidos com sucesso."]);
 } else {
-    echo json_encode(["success" => false, "message" => "Erro ao remover itens."]);
+    echo json_encode(["success" => false, "message" => "Nenhum item foi removido."]);
 }
 ?>
