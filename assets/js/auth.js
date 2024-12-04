@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Botão adicionar +
   const addItemButton = document.getElementById("addItemButton");
+  const removeSelected = document.getElementById("removeSelected");
 
   // Selecionar o modal
   const addItemModal = new bootstrap.Modal(
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (register) register.style.display = "none";
     if (login) login.style.display = "none";
     if (addItemButton) addItemButton.style.display = "none";
+    if (removeSelected) removeSelected.style.display = "none";
   }
 
   hideMenuItems(); // Inicialmente esconde todos os itens
@@ -44,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (register) register.style.display = "block";
         if (login) login.style.display = "none";
         if (addItemButton) addItemButton.style.display = "block";
+        if (removeSelected) removeSelected.style.display = "block";
       } else {
         // Usuário não logado: exibe "Login", oculta outros itens
         hideMenuItems();
@@ -155,19 +158,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       const response = await fetch("https://www.epamig.tech/germoplasma/delete_item.php", {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ids: selectedItems }),
+        body: JSON.stringify({ ids: selectedItems }), // Envia os IDs para exclusão
         credentials: "include",
       });
-
+    
       const data = await response.json();
-
+    
       if (data.success) {
         alert("Itens removidos com sucesso.");
-        // Atualiza os dados e renderiza a tabela novamente
+        // Atualiza a tabela removendo os itens excluídos
         allData = allData.filter((item) => !selectedItems.includes(item.id));
         renderItems();
       } else {
@@ -178,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Erro ao remover itens:", error);
       alert("Erro ao tentar remover os itens.");
     }
-  }
+  }    
 
   // Carregar dados iniciais
   fetch("https://www.epamig.tech/germoplasma/germoplasma_cafe.php")
