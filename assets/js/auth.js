@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const minhaConta = document.getElementById("minhaConta");
   const register = document.getElementById("register");
   const login = document.getElementById("login");
-  const logout = document.getElementById("logout");
 
   // Botão adicionar +
   const addItemButton = document.getElementById("addItemButton");
@@ -18,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (minhaConta) minhaConta.style.display = "none";
     if (register) register.style.display = "none";
     if (login) login.style.display = "none";
-    if (logout) logout.style.display = "none";
     if (addItemButton) addItemButton.style.display = "none";
   }
 
@@ -43,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (minhaConta) minhaConta.style.display = "block";
         if (register) register.style.display = "block";
         if (login) login.style.display = "none";
-        if (logout) logout.style.display = "block";
         if (addItemButton) addItemButton.style.display = "block";
       } else {
         // Usuário não logado: exibe "Login", oculta outros itens
@@ -110,33 +107,33 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
   // Lógica de Logout
-  const logoutButtons = document.querySelectorAll(".logout-button");
+  const logoutButton = document.getElementById("logout");
 
-    logoutButtons.forEach((button) => {
-      button.addEventListener("click", async function (event) {
-        event.preventDefault(); // Impede a navegação padrão do link
+  logoutButton.addEventListener("click", async function (event) {
+    event.preventDefault(); // Evita o comportamento padrão
+    try {
 
-        try {
-          const response = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ action: "logout" }),
-            credentials: "include",
-          });
-
-          const data = await response.json();
-
-          if (data.success) {
-            console.log("Logout realizado com sucesso");
-            location.reload();
-          }
-        } catch (error) {
-          console.error("Erro ao realizar o logout:", error);
-        }
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action: "logout" }),
+        credentials: "include", // Envia cookies se necessário
       });
-    });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Logout realizado com sucesso");
+        window.location.href = "/dashboard"; // Redireciona para a tela inicial
+      } else {
+        console.error("Erro no logout:", data.message);
+      }
+    } catch (error) {
+      console.error("Erro ao realizar o logout:", error);
+    }
+  });
 
 
   // Renderizar tabela de itens
