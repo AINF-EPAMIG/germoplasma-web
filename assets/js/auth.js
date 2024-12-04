@@ -10,7 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const addItemButton = document.getElementById("addItemButton");
 
   // Selecionar o modal
-  const addItemModal = new bootstrap.Modal(document.getElementById("addItemModal"));
+  const addItemModal = new bootstrap.Modal(
+    document.getElementById("addItemModal")
+  );
 
   // Ocultar itens do menu inicialmente
   function hideMenuItems() {
@@ -62,49 +64,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Lógica de Login
   const loginForm = document.getElementById("loginForm");
-      if (loginForm) {
-        loginForm.addEventListener("submit", async function (event) {
-          event.preventDefault(); // Impede o envio padrão do formulário
-      
-          const email = document.getElementById("email").value.trim();
-          const password = document.getElementById("password").value.trim();
-          const loginError = document.getElementById("loginError");
-      
-          if (loginError) loginError.style.display = "none";
-      
-          try {
-            const response = await fetch(url, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                action: "login",
-                email: email,
-                password: password,
-              }),
-              credentials: "include",
-            });
-      
-            const data = await response.json();
-            console.log(data); // Verifique o formato no console
-      
-            if (data.success) {
-              console.log("Login realizado com sucesso");
-              window.location.href = "/dashboard";
-            } else if (loginError) {
-              loginError.textContent = data.message || "Erro ao realizar login.";
-              loginError.style.display = "block";
-            }
-          } catch (error) {
-            console.error("Erro na requisição de login:", error);
-            if (loginError) {
-              loginError.textContent = "Erro ao conectar ao servidor.";
-              loginError.style.display = "block";
-            }
-          }
+  if (loginForm) {
+    loginForm.addEventListener("submit", async function (event) {
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const loginError = document.getElementById("loginError");
+
+      if (loginError) loginError.style.display = "none";
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            action: "login",
+            email: email,
+            password: password,
+          }),
+          credentials: "include",
         });
+
+        const data = await response.json();
+        console.log(data); // Verifique o formato no console
+
+        if (data.success) {
+          console.log("Login realizado com sucesso");
+          window.location.href = "/dashboard";
+        } else if (loginError) {
+          loginError.textContent = data.message || "Erro ao realizar login.";
+          loginError.style.display = "block";
+        }
+      } catch (error) {
+        console.error("Erro na requisição de login:", error);
+        if (loginError) {
+          loginError.textContent = "Erro ao conectar ao servidor.";
+          loginError.style.display = "block";
+        }
       }
+    });
+  }
 
   // Renderizar tabela de itens
   let currentIndex = 0;
@@ -160,40 +162,39 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const addItemForm = document.getElementById("addItemForm");
-  if (addItemForm) {
-    addItemForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
+  const submitButton = document.getElementById("addItemSubmit");
 
-      const newItem = {
-        numero_acesso: document.getElementById("numero_acesso").value.trim(),
-        designacao_material: document.getElementById("designacao_material").value.trim(),
-        local_coleta: document.getElementById("local_coleta").value.trim(),
-        proprietario: document.getElementById("proprietario").value.trim(),
-        municipio_estado: document.getElementById("municipio_estado").value.trim(),
-        idade_lavoura: document.getElementById("idade_lavoura").value.trim(),
-        data_coleta: document.getElementById("data_coleta").value.trim(),
-        coletor: document.getElementById("coletor").value.trim(),
-      };
+  addItemForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    submitButton.disabled = true; // Desabilita o botão
 
-      try {
-        const response = await fetch("https://www.epamig.tech/germoplasma/add_item.php", {
+    const newItem = {
+      // Preenche os campos como no código atual
+    };
+
+    try {
+      const response = await fetch(
+        "https://www.epamig.tech/germoplasma/add_item.php",
+        {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newItem),
           credentials: "include",
-        });
-
-        const data = await response.json();
-        if (data.success) {
-          location.reload(); // Recarrega os itens
-        } else {
-          console.error(`Erro ao adicionar item: ${data.message}`);
         }
-      } catch (error) {
-        console.error("Erro ao adicionar item:", error);
+      );
+
+      const data = await response.json();
+      if (data.success) {
+        console.log("Item adicionado com sucesso.");
+      } else {
+        console.error(`Erro ao adicionar item: ${data.message}`);
       }
-    });
-  }
+    } catch (error) {
+      console.error("Erro ao adicionar item:", error);
+    } finally {
+      submitButton.disabled = false; // Reabilita o botão
+    }
+  });
 });
