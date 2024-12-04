@@ -249,4 +249,50 @@ document.addEventListener("DOMContentLoaded", function () {
   if (addItemForm) {
     addItemForm.addEventListener("submit", addItem);
   }
+
+  // Função para filtrar as linhas da tabela
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Função para filtrar as linhas da tabela dinamicamente
+    function filterTable() {
+        const input = document.getElementById("filterInput");
+        const filter = input.value.toLowerCase();
+
+        const table = document.getElementById("germoplasma_cafe");
+        const rows = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName("td");
+            let match = false;
+
+            for (let j = 0; j < cells.length; j++) {
+                if (cells[j].textContent.toLowerCase().includes(filter)) {
+                    match = true;
+                    break;
+                }
+            }
+
+            rows[i].style.display = match ? "" : "none";
+        }
+    }
+
+    // Adicionar evento ao input após ele ser criado dinamicamente
+    const filterInput = document.getElementById("filterInput");
+    if (filterInput) {
+        filterInput.addEventListener("keyup", filterTable);
+    }
+
+    // Função para filtrar novamente quando o conteúdo da tabela mudar dinamicamente
+    function reapplyFilter() {
+        setTimeout(function() {
+            filterTable();
+        }, 0);
+    }
+
+    // Adicionar evento ao input para aplicar o filtro novamente após atualizações dinâmicas
+    window.addEventListener("load", reapplyFilter);
+});
+
+  
+  
 });

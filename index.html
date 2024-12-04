@@ -174,32 +174,45 @@
               <div class="card recent-sales overflow-auto">
                 <div class="card-body">
                   <h5 class="card-title">Tabela<span> | Atualizada</span></h5>
+
+                  <div>
+                    <div style="margin-bottom: 20px;">
+                      <input
+                        type="text"
+                        id="filterInput"
+                        class="form-control"
+                        placeholder="Filtrar por palavras-chave"
+                      />
+                    </div>
+                    
+                  <!-- Botões para usuarios logados, adicionar e remover -->
+                  <button style="margin-bottom: 20px;" id="addItemButton" class="btn btn-success">Adicionar Germoplasma</button>
+                  <button style="margin-bottom: 20px;" id="removeSelected" class="btn btn-danger">Remover Selecionados</button>
+
+                  </div>
                   <table class="table table-hover table-borderless align-middle">
-                    <table class="table table-hover table-borderless align-middle">
-                      <thead class="table-light">
-                        <tr>
-                          <th scope="col"><input type="checkbox" id="selectAll" /></th>
-                          <th scope="col">Número de Acesso</th>
-                          <th scope="col">Designação do Material</th>
-                          <th scope="col">Local de Coleta</th>
-                          <th scope="col">Proprietário</th>
-                          <th scope="col">Município/Estado</th>
-                          <th scope="col">Idade da Lavoura</th>
-                          <th scope="col">Data de Coleta</th>
-                          <th scope="col">Coletor</th>
-                        </tr>
-                      </thead>
-                      <tbody id="germoplasma_cafe">
-                        <!-- Linhas com dados e checkboxes serão geradas dinamicamente -->
-                      </tbody>
-                    </table>
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col"><input type="checkbox" id="selectAll" /></th>
+                        <th scope="col" onclick="sortTable(1)">Número de Acesso</th>
+                        <th scope="col" onclick="sortTable(2)">Designação do Material</th>
+                        <th scope="col" onclick="sortTable(3)">Local de Coleta</th>
+                        <th scope="col" onclick="sortTable(4)">Proprietário</th>
+                        <th scope="col" onclick="sortTable(5)">Município/Estado</th>
+                        <th scope="col" onclick="sortTable(6)">Idade da Lavoura</th>
+                        <th scope="col" onclick="sortTable(7)">Data de Coleta</th>
+                        <th scope="col" onclick="sortTable(8)">Coletor</th>
+                      </tr>
+                    </thead>
+                    <tbody id="germoplasma_cafe">
+                      <!-- Exemplo de dados dinâmicos -->
+                    </tbody>
+                  </table>
                     
                     <!-- Botões de controle -->
                     <div class="d-flex justify-content-start gap-2 mt-3">
                       <button id="loadMore" class="btn btn-dark">Carregar Mais Itens</button>
                       <button id="loadAll" class="btn btn-outline-dark">Carregar Todos</button>
-                      <button id="addItemButton" class="btn btn-success">Adicionar Germoplasma</button>
-                      <button id="removeSelected" class="btn btn-danger">Remover Selecionados</button>
                     </div>                    
                 </div>
               </div>
