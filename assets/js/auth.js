@@ -122,10 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    if (!confirm(`Deseja remover ${selectedItems.length} itens selecionados?`)) {
-      return;
-    }
-
     try {
       const response = await fetch(
         "https://www.epamig.tech/germoplasma/delete_item.php",
@@ -233,7 +229,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
 
       if (data.success) {
-        alert("Item adicionado com sucesso.");
         allData.push(newItem); // Adiciona o item à lista local
         renderItems(); // Re-renderiza a tabela
         addItemModal.hide(); // Fecha o modal
