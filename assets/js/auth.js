@@ -142,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
 
       if (data.success) {
+        alert("Itens removidos com sucesso.");
         // Atualiza a tabela removendo as linhas excluídas
         allData = allData.filter(
           (item) =>
@@ -155,9 +156,11 @@ document.addEventListener("DOMContentLoaded", function () {
         );
         renderItems();
       } else {
+        console.error("Erro ao remover itens:", data.message);
         alert(`Erro: ${data.message}`);
       }
     } catch (error) {
+      console.error("Erro ao remover itens:", error);
       alert("Erro ao tentar remover os itens.");
     }
   }
@@ -192,5 +195,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (removeSelected) {
     removeSelected.addEventListener("click", removeSelectedItems);
+  }
+
+
+  // Formulário de adicionar item
+
+  const addItemForm = document.getElementById("addItemForm");
+  const addItemSubmit = document.getElementById("addItemSubmit");
+
+  // Função para adicionar novo item
+  async function addItem(event) {
+    event.preventDefault(); // Evita o comportamento padrão do formulário
+    addItemSubmit.disabled = true; // Desabilita o botão para evitar envios múltiplos
+
+    // Captura os dados do formulário
+    const newItem = {
+      numero_acesso: document.getElementById("numero_acesso").value.trim(),
+      designacao_material: document.getElementById("designacao_material").value.trim(),
+      local_coleta: document.getElementById("local_coleta").value.trim(),
+      proprietario: document.getElementById("proprietario").value.trim(),
+      municipio_estado: document.getElementById("municipio_estado").value.trim(),
+      idade_lavoura: document.getElementById("idade_lavoura").value.trim(),
+      data_coleta: document.getElementById("data_coleta").value.trim(),
+      coletor: document.getElementById("coletor").value.trim(),
+    };
+
+    try {
+      // Envia os dados para o backend
+      const response = await fetch("https://www.epamig.tech/germoplasma/add_item.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newItem),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Item adicionado com sucesso.");
+        allData.push(newItem); // Adiciona o item à lista local
+        renderItems(); // Re-renderiza a tabela
+        addItemModal.hide(); // Fecha o modal
+        addItemForm.reset(); // Limpa o formulário
+      } else {
+        alert(`Erro: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Erro ao adicionar item:", error);
+      alert("Erro ao tentar adicionar o item. Tente novamente.");
+    } finally {
+      addItemSubmit.disabled = false; // Reabilita o botão
+    }
+  }
+
+  // Adiciona o evento de submissão ao formulário
+  if (addItemForm) {
+    addItemForm.addEventListener("submit", addItem);
   }
 });
