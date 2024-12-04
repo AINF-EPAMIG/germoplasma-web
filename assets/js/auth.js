@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
     itemsToShow.forEach((item) => {
       const row = document.createElement("tr");
       row.innerHTML = `
+        <td><input type="checkbox" class="select-item" data-id="${item.id}" /></td>
         <td>${item.numero_acesso}</td>
         <td>${item.designacao_material}</td>
         <td>${item.local_coleta}</td>
@@ -128,46 +129,54 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${item.idade_lavoura}</td>
         <td>${item.data_coleta}</td>
         <td>${item.coletor}</td>
-        <td>
-            <button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remover</button>
-        </td>
       `;
       tbody.appendChild(row);
     });
 
-    // Adiciona o evento de remoção aos botões
-    document.querySelectorAll(".remove-item").forEach((button) => {
-      button.addEventListener("click", removeItem);
+    // Adiciona evento para selecionar/desmarcar todos os checkboxes
+    document.getElementById("selectAll").addEventListener("change", function () {
+      const checkboxes = document.querySelectorAll(".select-item");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = this.checked;
+      });
     });
   }
 
-  async function removeItem(event) {
-    const itemId = event.target.dataset.id;
+  async function removeSelectedItems() {
+    const selectedItems = Array.from(document.querySelectorAll(".select-item:checked"))
+      .map((checkbox) => checkbox.dataset.id);
 
-    if (!confirm("Tem certeza de que deseja remover este item?")) return;
+    if (selectedItems.length === 0) {
+      alert("Nenhum item selecionado.");
+      return;
+    }
+
+    if (!confirm(`Deseja remover ${selectedItems.length} itens selecionados?`)) return;
 
     try {
-      const response = await fetch(`https://www.epamig.tech/germoplasma/delete_item.php`, {
+      const response = await fetch("https://www.epamig.tech/germoplasma/delete_item.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: itemId }),
+        body: JSON.stringify({ ids: selectedItems }),
         credentials: "include",
       });
 
       const data = await response.json();
 
       if (data.success) {
-        alert("Item removido com sucesso.");
-        renderItems(); // Atualiza a tabela após remoção
+        alert("Itens removidos com sucesso.");
+        // Atualiza os dados e renderiza a tabela novamente
+        allData = allData.filter((item) => !selectedItems.includes(item.id));
+        renderItems();
       } else {
-        console.error("Erro ao remover item:", data.message);
+        console.error("Erro ao remover itens:", data.message);
         alert(`Erro: ${data.message}`);
       }
     } catch (error) {
-      console.error("Erro ao remover item:", error);
-      alert("Erro ao tentar remover o item.");
+      console.error("Erro ao remover itens:", error);
+      alert("Erro ao tentar remover os itens.");
     }
   }
 
@@ -179,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
       renderItems();
     })
     .catch((error) => {
-      console.error("Error fetching data:", error);
+      console.error("Erro ao buscar dados:", error);
     });
 
   document.getElementById("loadMore").addEventListener("click", function () {
@@ -198,54 +207,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Adicionar itens
-  const addItemForm = document.getElementById("addItemForm");
-  const submitButton = document.getElementById("addItemSubmit");
-
-  if (addItemForm && !addItemForm.dataset.listenerAdded) {
-    addItemForm.addEventListener("submit", async function (event) {
-      event.preventDefault(); // Evita o comportamento padrão do formulário
-      submitButton.disabled = true; // Desabilita o botão para evitar múltiplos envios
-
-      // Captura os dados do formulário
-      const newItem = {
-        numero_acesso: document.getElementById("numero_acesso").value.trim(),
-        designacao_material: document.getElementById("designacao_material").value.trim(),
-        local_coleta: document.getElementById("local_coleta").value.trim(),
-        proprietario: document.getElementById("proprietario").value.trim(),
-        municipio_estado: document.getElementById("municipio_estado").value.trim(),
-        idade_lavoura: document.getElementById("idade_lavoura").value.trim(),
-        data_coleta: document.getElementById("data_coleta").value.trim(),
-        coletor: document.getElementById("coletor").value.trim(),
-      };
-
-      try {
-        const response = await fetch("https://www.epamig.tech/germoplasma/add_item.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newItem),
-          credentials: "include",
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          alert("Item adicionado com sucesso.");
-          location.reload(); // Recarrega a página
-        } else {
-          console.error(`Erro ao adicionar item: ${data.message}`);
-          alert(`Erro: ${data.message}`);
-        }
-      } catch (error) {
-        console.error("Erro ao adicionar item:", error);
-        alert("Ocorreu um erro ao adicionar o item. Tente novamente.");
-      } finally {
-        submitButton.disabled = false;
-      }
-    });
-
-    addItemForm.dataset.listenerAdded = true;
-  }
+  document.getElementById("removeSelected").addEventListener("click", removeSelectedItems);
 });

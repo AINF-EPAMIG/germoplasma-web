@@ -1,9 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: https://epamig.tech");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
-
 session_start();
 require 'database.php';
 
@@ -14,19 +10,17 @@ if (!isset($_SESSION['user_id'])) {
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!isset($data->id)) {
-    echo json_encode(["success" => false, "message" => "ID do item não fornecido."]);
+if (!isset($data->ids) || !is_array($data->ids)) {
+    echo json_encode(["success" => false, "message" => "IDs dos itens não fornecidos ou inválidos."]);
     exit;
 }
 
-$id = $data->id;
+$ids = implode(",", array_map("intval", $data->ids)); // Sanitiza os IDs
+$query = "DELETE FROM germoplasma_cafe WHERE id IN ($ids)";
 
-$stmt = $conn->prepare("DELETE FROM germoplasma_cafe WHERE id = ?");
-$stmt->bind_param("i", $id);
-
-if ($stmt->execute()) {
-    echo json_encode(["success" => true, "message" => "Item removido com sucesso."]);
+if ($conn->query($query)) {
+    echo json_encode(["success" => true, "message" => "Itens removidos com sucesso."]);
 } else {
-    echo json_encode(["success" => false, "message" => "Erro ao remover item."]);
+    echo json_encode(["success" => false, "message" => "Erro ao remover itens."]);
 }
 ?>
