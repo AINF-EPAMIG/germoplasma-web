@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         const data = await response.json();
-        console.log(data); // Verifique o formato no console
 
         if (data.success) {
           console.log("Login realizado com sucesso");
@@ -129,9 +128,47 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${item.idade_lavoura}</td>
         <td>${item.data_coleta}</td>
         <td>${item.coletor}</td>
+        <td>
+            <button class="btn btn-danger btn-sm remove-item" data-id="${item.id}">Remover</button>
+        </td>
       `;
       tbody.appendChild(row);
     });
+
+    // Adiciona o evento de remoção aos botões
+    document.querySelectorAll(".remove-item").forEach((button) => {
+      button.addEventListener("click", removeItem);
+    });
+  }
+
+  async function removeItem(event) {
+    const itemId = event.target.dataset.id;
+
+    if (!confirm("Tem certeza de que deseja remover este item?")) return;
+
+    try {
+      const response = await fetch(`https://www.epamig.tech/germoplasma/delete_item.php`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: itemId }),
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Item removido com sucesso.");
+        renderItems(); // Atualiza a tabela após remoção
+      } else {
+        console.error("Erro ao remover item:", data.message);
+        alert(`Erro: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Erro ao remover item:", error);
+      alert("Erro ao tentar remover o item.");
+    }
   }
 
   // Carregar dados iniciais
@@ -161,63 +198,54 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-// Adiciona itens
+  // Adicionar itens
+  const addItemForm = document.getElementById("addItemForm");
+  const submitButton = document.getElementById("addItemSubmit");
 
-const addItemForm = document.getElementById("addItemForm");
-const submitButton = document.getElementById("addItemSubmit");
+  if (addItemForm && !addItemForm.dataset.listenerAdded) {
+    addItemForm.addEventListener("submit", async function (event) {
+      event.preventDefault(); // Evita o comportamento padrão do formulário
+      submitButton.disabled = true; // Desabilita o botão para evitar múltiplos envios
 
-if (addItemForm && !addItemForm.dataset.listenerAdded) {
-  addItemForm.addEventListener("submit", async function (event) {
-    event.preventDefault(); // Evita o comportamento padrão do formulário
-    submitButton.disabled = true; // Desabilita o botão para evitar múltiplos envios
+      // Captura os dados do formulário
+      const newItem = {
+        numero_acesso: document.getElementById("numero_acesso").value.trim(),
+        designacao_material: document.getElementById("designacao_material").value.trim(),
+        local_coleta: document.getElementById("local_coleta").value.trim(),
+        proprietario: document.getElementById("proprietario").value.trim(),
+        municipio_estado: document.getElementById("municipio_estado").value.trim(),
+        idade_lavoura: document.getElementById("idade_lavoura").value.trim(),
+        data_coleta: document.getElementById("data_coleta").value.trim(),
+        coletor: document.getElementById("coletor").value.trim(),
+      };
 
-    // Captura os dados do formulário
-    const newItem = {
-      numero_acesso: document.getElementById("numero_acesso").value.trim(),
-      designacao_material: document.getElementById("designacao_material").value.trim(),
-      local_coleta: document.getElementById("local_coleta").value.trim(),
-      proprietario: document.getElementById("proprietario").value.trim(),
-      municipio_estado: document.getElementById("municipio_estado").value.trim(),
-      idade_lavoura: document.getElementById("idade_lavoura").value.trim(),
-      data_coleta: document.getElementById("data_coleta").value.trim(),
-      coletor: document.getElementById("coletor").value.trim(),
-    };
+      try {
+        const response = await fetch("https://www.epamig.tech/germoplasma/add_item.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newItem),
+          credentials: "include",
+        });
 
-    // Log para verificar os dados enviados
-    console.log("Dados a serem enviados:", newItem);
+        const data = await response.json();
 
-    try {
-      // Envia os dados para o backend
-      const response = await fetch("https://www.epamig.tech/germoplasma/add_item.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newItem),
-        credentials: "include",
-      });
-
-      // Trata a resposta do backend
-      const data = await response.json();
-      if (data.success) {
-        console.log("Item adicionado com sucesso.");
-        // Atualiza a interface dinamicamente, se necessário
-        location.reload(); // Recarrega a página (se necessário)
-      } else {
-        console.error(`Erro ao adicionar item: ${data.message}`);
-        alert(`Erro: ${data.message}`);
+        if (data.success) {
+          alert("Item adicionado com sucesso.");
+          location.reload(); // Recarrega a página
+        } else {
+          console.error(`Erro ao adicionar item: ${data.message}`);
+          alert(`Erro: ${data.message}`);
+        }
+      } catch (error) {
+        console.error("Erro ao adicionar item:", error);
+        alert("Ocorreu um erro ao adicionar o item. Tente novamente.");
+      } finally {
+        submitButton.disabled = false;
       }
-    } catch (error) {
-      console.error("Erro ao adicionar item:", error);
-      alert("Ocorreu um erro ao adicionar o item. Tente novamente.");
-    } finally {
-      // Reabilita o botão após o processamento
-      submitButton.disabled = false;
-    }
-  });
+    });
 
-  // Marca o formulário para evitar múltiplas associações do evento
-  addItemForm.dataset.listenerAdded = true;
-}
-
+    addItemForm.dataset.listenerAdded = true;
+  }
 });
