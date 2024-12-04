@@ -252,47 +252,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Função para filtrar as linhas da tabela
 
-  document.addEventListener("DOMContentLoaded", function () {
-    // Função para filtrar as linhas da tabela dinamicamente
-    function filterTable() {
-        const input = document.getElementById("filterInput");
-        const filter = input.value.toLowerCase();
+  function filterTable() {
+    const filter = filterInput.value.toLowerCase(); // Obtém o texto digitado no campo de filtro
+    const rows = tableBody.getElementsByTagName("tr"); // Obtém todas as linhas da tabela
 
-        const table = document.getElementById("germoplasma_cafe");
-        const rows = table.getElementsByTagName("tr");
+    // Itera sobre cada linha da tabela
+    for (let i = 0; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td"); // Obtém as células da linha
+        let match = false;
 
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName("td");
-            let match = false;
-
-            for (let j = 0; j < cells.length; j++) {
-                if (cells[j].textContent.toLowerCase().includes(filter)) {
-                    match = true;
-                    break;
-                }
+        // Verifica se alguma célula contém o texto filtrado
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j].textContent.toLowerCase().includes(filter)) {
+                match = true;
+                break;
             }
-
-            rows[i].style.display = match ? "" : "none";
         }
+
+        // Mostra ou oculta a linha com base no filtro
+        rows[i].style.display = match ? "" : "none";
     }
+}
 
-    // Adicionar evento ao input após ele ser criado dinamicamente
-    const filterInput = document.getElementById("filterInput");
-    if (filterInput) {
-        filterInput.addEventListener("keyup", filterTable);
-    }
+// Adiciona o evento de filtro ao campo de entrada
+if (filterInput) {
+    filterInput.addEventListener("keyup", filterTable);
+}
 
-    // Função para filtrar novamente quando o conteúdo da tabela mudar dinamicamente
-    function reapplyFilter() {
-        setTimeout(function() {
-            filterTable();
-        }, 0);
-    }
-
-    // Adicionar evento ao input para aplicar o filtro novamente após atualizações dinâmicas
-    window.addEventListener("load", reapplyFilter);
-});
-
-  
-  
+// Chama a função para buscar e preencher os dados ao carregar a página
+fetchData();
 });
