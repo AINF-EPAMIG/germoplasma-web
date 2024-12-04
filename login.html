@@ -98,7 +98,6 @@
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            alert(data.message);
             // Redireciona para o dashboard em caso de login bem-sucedido
             window.location.href = '/germoplasma/';
           } else {
