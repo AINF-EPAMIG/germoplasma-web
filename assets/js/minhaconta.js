@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         } catch (error) {
           console.error("Erro ao alterar senha:", error);
-          alert("Ocorreu um erro ao alterar a senha. Tente novamente.");
         }
       });
   
