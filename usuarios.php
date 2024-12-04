@@ -53,11 +53,11 @@ if ($action === "register") {
 
     if ($stmt->execute()) {
         echo json_encode(["success" => true]); // Retorna sucesso
+        exit; // Certifica-se de finalizar o script
     } else {
         echo json_encode(["success" => false, "message" => "Erro ao cadastrar usuário.", "data" => []]);
+        exit; // Certifica-se de finalizar o script
     }
-
-    exit; // Certifica-se de finalizar o script
 
 } elseif ($action === "login") {
     $email = $data->email ?? null;
