@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (data.success) {
         console.log("Logout realizado com sucesso");
-        window.location.href = "/dashboard"; // Redireciona para a tela inicial
+        window.location.href = "/germoplasma/"; // Redireciona para a tela inicial
       } else {
         console.error("Erro no logout:", data.message);
       }
