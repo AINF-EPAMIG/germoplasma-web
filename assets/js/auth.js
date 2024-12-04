@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
     itemsToShow.forEach((item) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><input type="checkbox" class="select-item" /></td>
+        <td><input type="checkbox"></td>
         <td>${item.numero_acesso}</td>
         <td>${item.designacao_material}</td>
         <td>${item.local_coleta}</td>
