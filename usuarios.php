@@ -20,21 +20,30 @@ if ($action === "register") {
     $email = filter_var($data->email ?? '', FILTER_SANITIZE_EMAIL);
     $password = $data->password ?? '';
 
+    // Verificação de campos obrigatórios
     if (!$nome || !$email || !$password) {
         echo json_encode(["success" => false, "message" => "Todos os campos são obrigatórios.", "data" => []]);
         exit;
     }
 
+    // Verificação de formato de email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode(["success" => false, "message" => "E-mail inválido.", "data" => []]);
         exit;
     }
 
+    // Verificar se o email já está cadastrado
     $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    if ($result->num_rows > 0) {
+        echo json_encode(["success" => false, "message" => "E-mail já está em uso.", "data" => []]);
+        exit; // Finaliza a execução
+    }
+
+    // Inserir novo usuário
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha, nivel_permissao, status, data_cadastro) VALUES (?, ?, ?, ?, ?, ?)");
     $nivel_permissao = 1; 
@@ -47,7 +56,9 @@ if ($action === "register") {
     } else {
         echo json_encode(["success" => false, "message" => "Erro ao cadastrar usuário.", "data" => []]);
     }
-    exit;
+
+    exit; // Certifica-se de finalizar o script
+
 } elseif ($action === "login") {
     $email = $data->email ?? null;
     $password = $data->password ?? null;
