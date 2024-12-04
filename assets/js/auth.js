@@ -231,8 +231,18 @@ document.addEventListener("DOMContentLoaded", function () {
         credentials: "include",
       });
 
+      const data = await response.json();
+
+      if (data.success) {
+        allData.push(newItem); // Adiciona o item à lista local
+        addItemModal.hide(); // Fecha o modal
+        addItemForm.reset(); // Limpa o formulário
+      } else {
+        alert(`Erro: ${data.message}`);
+      }
     } catch (error) {
       console.error("Erro ao adicionar item:", error);
+      alert("Erro ao tentar adicionar o item. Tente novamente.");
     } finally {
       addItemSubmit.disabled = false; // Reabilita o botão
     }
