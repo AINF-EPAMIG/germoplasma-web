@@ -142,10 +142,7 @@ if ($action === "register") {
                 } else {
                     echo json_encode(["success" => false, "message" => "Erro ao alterar a senha.", "data" => []]);
                 }
-            } else {
-                echo json_encode(["success" => false, "message" => "Senha atual incorreta.", "data" => []]);
-            }
-        } else {
+            }} else {
             echo json_encode(["success" => false, "message" => "Usuário não encontrado.", "data" => []]);
         }
     } else {
