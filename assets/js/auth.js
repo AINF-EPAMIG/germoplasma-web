@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const register = document.getElementById("register");
   const login = document.getElementById("login");
 
-  // Botão adicionar +
+  // Botões
   const addItemButton = document.getElementById("addItemButton");
   const removeSelected = document.getElementById("removeSelected");
 
@@ -41,14 +41,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
 
       if (data.success) {
-        // Usuário logado: exibe "Minha Conta", "Register", "Sair", e botão para adicionar mais itens, oculta "Login"
+        // Exibe itens do menu para usuários autenticados
         if (minhaConta) minhaConta.style.display = "block";
         if (register) register.style.display = "block";
         if (login) login.style.display = "none";
         if (addItemButton) addItemButton.style.display = "block";
         if (removeSelected) removeSelected.style.display = "block";
       } else {
-        // Usuário não logado: exibe "Login", oculta outros itens
+        // Exibe apenas "Login" para usuários não autenticados
         hideMenuItems();
         if (login) login.style.display = "block";
       }
@@ -59,58 +59,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Chamar a função de verificação inicial
+  // Chama a função de verificação inicial
   fetchUserData();
 
-  // Verificador contínuo a cada 2 segundos
+  // Verifica o status do usuário a cada 2 segundos
   setInterval(fetchUserData, 2000);
 
-  // Lógica de Login
-  const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", async function (event) {
-      event.preventDefault(); // Impede o envio padrão do formulário
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const loginError = document.getElementById("loginError");
-
-      if (loginError) loginError.style.display = "none";
-
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            action: "login",
-            email: email,
-            password: password,
-          }),
-          credentials: "include",
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          console.log("Login realizado com sucesso");
-          window.location.href = "/dashboard";
-        } else if (loginError) {
-          loginError.textContent = data.message || "Erro ao realizar login.";
-          loginError.style.display = "block";
-        }
-      } catch (error) {
-        console.error("Erro na requisição de login:", error);
-        if (loginError) {
-          loginError.textContent = "Erro ao conectar ao servidor.";
-          loginError.style.display = "block";
-        }
-      }
-    });
-  }
-
-  // Renderizar tabela de itens
+  // Renderiza os itens da tabela
   let currentIndex = 0;
   let itemsPerPage = 20;
   let allData = [];
@@ -123,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
     itemsToShow.forEach((item) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><input type="checkbox" class="select-item" data-id="${item.id}" /></td>
+        <td><input type="checkbox" class="select-item" /></td>
         <td>${item.numero_acesso}</td>
         <td>${item.designacao_material}</td>
         <td>${item.local_coleta}</td>
@@ -137,41 +92,68 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Adiciona evento para selecionar/desmarcar todos os checkboxes
-    document.getElementById("selectAll").addEventListener("change", function () {
-      const checkboxes = document.querySelectorAll(".select-item");
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = this.checked;
+    const selectAll = document.getElementById("selectAll");
+    if (selectAll) {
+      selectAll.addEventListener("change", function () {
+        const checkboxes = document.querySelectorAll(".select-item");
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = this.checked;
+        });
       });
-    });
+    }
   }
 
+  // Remove itens selecionados
   async function removeSelectedItems() {
-    const selectedItems = Array.from(document.querySelectorAll(".select-item:checked"))
-      .map((checkbox) => checkbox.dataset.id);
+    const selectedItems = Array.from(
+      document.querySelectorAll(".select-item:checked")
+    ).map((checkbox) => {
+      const row = checkbox.closest("tr");
+      return {
+        numero_acesso: row.cells[1].textContent.trim(),
+        designacao_material: row.cells[2].textContent.trim(),
+        local_coleta: row.cells[3].textContent.trim(),
+        proprietario: row.cells[4].textContent.trim(),
+      };
+    });
 
     if (selectedItems.length === 0) {
       alert("Nenhum item selecionado.");
       return;
     }
 
-    if (!confirm(`Deseja remover ${selectedItems.length} itens selecionados?`)) return;
+    if (!confirm(`Deseja remover ${selectedItems.length} itens selecionados?`)) {
+      return;
+    }
 
     try {
-      const response = await fetch("https://www.epamig.tech/germoplasma/delete_item.php", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ids: selectedItems }), // Envia os IDs para exclusão
-        credentials: "include",
-      });
-    
+      const response = await fetch(
+        "https://www.epamig.tech/germoplasma/delete_item.php",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ items: selectedItems }),
+          credentials: "include",
+        }
+      );
+
       const data = await response.json();
-    
+
       if (data.success) {
         alert("Itens removidos com sucesso.");
-        // Atualiza a tabela removendo os itens excluídos
-        allData = allData.filter((item) => !selectedItems.includes(item.id));
+        // Atualiza a tabela removendo as linhas excluídas
+        allData = allData.filter(
+          (item) =>
+            !selectedItems.some(
+              (selected) =>
+                selected.numero_acesso === item.numero_acesso &&
+                selected.designacao_material === item.designacao_material &&
+                selected.local_coleta === item.local_coleta &&
+                selected.proprietario === item.proprietario
+            )
+        );
         renderItems();
       } else {
         console.error("Erro ao remover itens:", data.message);
@@ -181,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Erro ao remover itens:", error);
       alert("Erro ao tentar remover os itens.");
     }
-  }    
+  }
 
   // Carregar dados iniciais
   fetch("https://www.epamig.tech/germoplasma/germoplasma_cafe.php")
@@ -194,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Erro ao buscar dados:", error);
     });
 
+  // Eventos de botão
   document.getElementById("loadMore").addEventListener("click", function () {
     currentIndex += itemsPerPage;
     renderItems();
@@ -210,5 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  document.getElementById("removeSelected").addEventListener("click", removeSelectedItems);
+  if (removeSelected) {
+    removeSelected.addEventListener("click", removeSelectedItems);
+  }
 });
