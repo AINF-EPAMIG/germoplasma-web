@@ -234,7 +234,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const data = await response.json();
 
       if (data.success) {
+        alert("Item adicionado com sucesso.");
         allData.push(newItem); // Adiciona o item à lista local
+        renderItems(); // Re-renderiza a tabela
         addItemModal.hide(); // Fecha o modal
         addItemForm.reset(); // Limpa o formulário
       } else {
