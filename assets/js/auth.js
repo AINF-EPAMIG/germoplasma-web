@@ -73,8 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
           const password = document.getElementById("password").value.trim();
           const loginError = document.getElementById("loginError");
       
-          if (loginError) loginError.style.display = "none";
-      
           try {
             const response = await fetch(url, {
               method: "POST",

@@ -84,7 +84,6 @@ if ($action === "register") {
         $_SESSION['user_name'] = $user['nome'];
 
         unset($user['senha']); 
-        echo json_encode(["success" => true, "data" => $user]);
     } else {
         echo json_encode(["success" => false, "message" => "E-mail ou senha inválidos.", "data" => []]);
     }
@@ -99,7 +98,6 @@ if ($action === "register") {
 
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
-            echo json_encode(["success" => true, "data" => $user]);
         } else {
             echo json_encode(["success" => false, "message" => "Usuário não encontrado."]);
         }
