@@ -252,6 +252,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Função para filtrar as linhas da tabela
 
+  const tableBody = document.getElementById("germoplasma_cafe");
+  const filterInput = document.getElementById("filterInput");
+
   function filterTable() {
     const filter = filterInput.value.toLowerCase(); // Obtém o texto digitado no campo de filtro
     const rows = tableBody.getElementsByTagName("tr"); // Obtém todas as linhas da tabela
